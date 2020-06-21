@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "extension-build-webpack-plugin": "^1.1.7",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

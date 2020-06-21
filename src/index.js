@@ -1,5 +1,6 @@
-//import React from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import Modal from "./Modal";
 
 // class App extends React.Component{
 //
@@ -25,43 +26,27 @@ import ReactDOM from "react-dom";
 // },5000)
 
 //document.body.insertBefore(newDiv, currentDiv);
-
-function putHTMLElements () {
-    let newDiv = document.createElement("div")
-    let newContent = document.createTextNode("HI thereeee")
-    newDiv.style.backgroundColor = "red"
-    newDiv.appendChild(newContent)
-
-    let btn = document.createElement("button")
-    btn.style.zIndex = "999"
-    btn.innerHTML = "Combination"
-    console.log(typeof document.getElementsByClassName("wishlist__toggle--container"))
-    console.log(document.getElementsByClassName("wishlist__toggle--container"))
-    if (document.getElementsByClassName("wishlist__toggle--container") !== undefined) {
-        let currentDiv = document.getElementsByClassName("wishlist__toggle--container")[0].parentNode
-        console.log(document.getElementsByClassName("product-image product-image__plp")[0], "yoloo")
-        document.getElementsByClassName("image-list__item image-list__item--secondary")[0].appendChild(newDiv)
-        document.getElementsByClassName("product-image product-image__plp")[0].appendChild(btn)
+    window.onload = function() {
+        let elms = document.getElementsByClassName("product-list__item three")
+    if (elms.length>0){
+        for(let i=0; i<elms.length;i++){
+            let btn1 = document.createElement("button")
+            btn1.innerHTML = "Combination"
+            btn1.style.zIndex = "999"
+            btn1.onclick = function () {
+                let show = true
+                function hideModal(){
+                    show = false
+                    console.log("clicked")
+                }
+                ReactDOM.render(
+     <Modal show={show} handleClose={hideModal} />, document.getElementById("root"));
+            }
+            btn1.className = "open-combination-modal"
+           elms[i].appendChild(btn1)
+        }
     }
 }
 
-putHTMLElements()
-// setTimeout(function () {
-//     let newDiv = document.createElement("div")
-//     let newContent = document.createTextNode("HI thereeee")
-//     newDiv.style.backgroundColor = "red"
-//     newDiv.appendChild(newContent)
-//
-//     let btn = document.createElement("button")
-//     btn.style.zIndex = "999"
-//     btn.innerHTML = "Combination"
-//     if(document.getElementsByClassName("wishlist__toggle--container")){
-//         let currentDiv = document.getElementsByClassName("wishlist__toggle--container")[0].parentNode
-//         console.log( document.getElementsByClassName("product-image product-image__plp")[0],"yoloo")
-//         document.getElementsByClassName("image-list__item image-list__item--secondary")[0].appendChild(newDiv)
-//         document.getElementsByClassName("product-image product-image__plp")[0].appendChild(btn)
-//     }
-//     console.log("bak buraya ikinci kere")
-// },500)
 
 
