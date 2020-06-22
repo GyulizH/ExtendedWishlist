@@ -4,10 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "extension-build-webpack-plugin": "^1.1.7",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "sass": "^1.26.8",
+    "sass-loader": "^8.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
