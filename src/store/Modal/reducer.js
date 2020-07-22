@@ -8,7 +8,7 @@ export const modalReducer = (state=initialState,action) => {
     if(action.type === TOGGLE_MODAL){
         return{
             ...state,
-            ...action.payload
+            isModalOpen:!initialState.isModalOpen
         }
     }
     return state
