@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { store } from './store/index.js'
 import Extension from "./components/Extension"
+import {TOGGLE_MODAL} from "./store/Modal/action";
 
 const modalWrapper = document.createElement('div')
 window.onload = function () {
   modalWrapper.className = 'wishlist--modal-wrapper'
   document.body.appendChild(modalWrapper)
+  console.log(store,"store")
   ReactDOM.render(
     <Provider store={store}>
       <Extension />
@@ -28,13 +30,8 @@ function getElements() {
         btn1.innerHTML = 'Combination'
         btn1.style.zIndex = '999'
         btn1.onclick = function () {
-          store.dispatch({ type: 'TOGGLE_MODAL' })
-          let show = true
-
-          function hideModal() {
-            show = false
-            console.log('clicked')
-          }
+          console.log("button")
+          store.dispatch({ type: TOGGLE_MODAL })
         }
         btn1.className = 'open-combination-modal'
         elms[i].appendChild(btn1)
