@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
-import {combineReducers} from "redux";
-import {modalReducer} from "./Modal/reducer";
+import { combineReducers } from 'redux'
+import { modalReducer } from './Modal/reducer'
 
 // export default createReducer(
 //   { isModalOpen: false },
@@ -12,5 +12,5 @@ import {modalReducer} from "./Modal/reducer";
 // )
 
 export default combineReducers({
-    modalReducer
+  modalReducer,
 })

@@ -2,15 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { store } from './store/index.js'
-import Extension from "./components/Extension"
-import {TOGGLE_MODAL} from "./store/Modal/action";
-
+import Extension from './components/Extension'
+import { TOGGLE_MODAL } from './store/Modal/action'
 
 const modalWrapper = document.createElement('div')
 window.onload = function () {
   modalWrapper.className = 'wishlist--modal-wrapper'
   document.body.appendChild(modalWrapper)
-  console.log({modalWrapper})
+  console.log(store, "store")
   ReactDOM.render(
     <Provider store={store}>
       <Extension />
@@ -20,7 +19,6 @@ window.onload = function () {
   getElements()
 }
 function getElements() {
-  
   let elms = document.getElementsByClassName('product-list__product')
 
   if (elms.length > 0) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { store } from '../../store/index'
 import {TOGGLE_MODAL} from "../../store/Modal/action";
-import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
+import { connect } from 'react-redux'
 
 
 class Modal extends React.Component{
@@ -12,10 +12,12 @@ class Modal extends React.Component{
 
     closeModal(){
         console.log("hey close modal")
-        store.dispatch({ type: 'TOGGLE_MODAL' })
+        this.props.closeModal()
+        window.location.reload()
     }
 
     render() {
+        console.log("modal is opened")
         return(
             <div>
                     <div>This modal is open</div>
@@ -25,8 +27,12 @@ class Modal extends React.Component{
     }
 }
 
+const mapDispatchToProps= dispatch => {
+    return {
+        closeModal : () => dispatch({type: TOGGLE_MODAL})
+    }
+}
 
-
-export default Modal
+export default connect(null,mapDispatchToProps)(Modal)
 
 //useeffects

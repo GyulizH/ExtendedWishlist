@@ -1,16 +1,16 @@
-import {TOGGLE_MODAL} from "./action";
+import { TOGGLE_MODAL } from './action'
 
-const initialState= {
-    isModalOpen:false
+const initialState = {
+  isModalOpen: false,
 }
 
-export const modalReducer = (state=initialState,action) => {
-    if(action.type === TOGGLE_MODAL){
-        console.log("toggle modal fired")
-        return{
-            ...state,
-            isModalOpen:!initialState.isModalOpen
-        }
+export const modalReducer = (state = initialState, action) => {
+  if (action.type === TOGGLE_MODAL) {
+    console.log('toggle modal fired',initialState.isModalOpen)
+    return {
+      ...state,
+      isModalOpen: !initialState.isModalOpen,
     }
-    return state
+  }
+  return state
 }
