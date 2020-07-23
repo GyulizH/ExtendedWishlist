@@ -2,8 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Modal from '../Modal'
 const Extension = props => {
-  console.log(props,"modaaal")
-  return <div>{props.isModalOpen && <Modal />}</div>
+  return <div>
+    {JSON.stringify(props)}
+    {props.isModalOpen && <Modal />}
+  
+  </div>
 }
-const mapStateToProps = state => ({ ...state })
+const mapStateToProps = state => ({ isModalOpen: state.modalReducer.isModalOpen })
 export default connect(mapStateToProps)(Extension)

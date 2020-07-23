@@ -5,11 +5,12 @@ import { store } from './store/index.js'
 import Extension from "./components/Extension"
 import {TOGGLE_MODAL} from "./store/Modal/action";
 
+
 const modalWrapper = document.createElement('div')
 window.onload = function () {
   modalWrapper.className = 'wishlist--modal-wrapper'
   document.body.appendChild(modalWrapper)
-  console.log(store,"store")
+  console.log({modalWrapper})
   ReactDOM.render(
     <Provider store={store}>
       <Extension />
@@ -19,7 +20,8 @@ window.onload = function () {
   getElements()
 }
 function getElements() {
-  let elms = document.getElementsByClassName('product-list__item three')
+  
+  let elms = document.getElementsByClassName('product-list__product')
 
   if (elms.length > 0) {
     for (let i = 0; i < elms.length; i++) {
@@ -30,7 +32,6 @@ function getElements() {
         btn1.innerHTML = 'Combination'
         btn1.style.zIndex = '999'
         btn1.onclick = function () {
-          console.log("button")
           store.dispatch({ type: TOGGLE_MODAL })
         }
         btn1.className = 'open-combination-modal'

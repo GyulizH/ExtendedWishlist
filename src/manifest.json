@@ -6,7 +6,7 @@
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["*://*.tommy.com/dames-kleding/*"],
+      "matches": ["*://*.tommy.com/*"],
       "run_at": "document_idle",
       "js": ["bundle.js"]
     }
