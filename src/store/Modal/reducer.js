@@ -6,6 +6,7 @@ const initialState= {
 
 export const modalReducer = (state=initialState,action) => {
     if(action.type === TOGGLE_MODAL){
+        console.log("toggle modal fired")
         return{
             ...state,
             isModalOpen:!initialState.isModalOpen

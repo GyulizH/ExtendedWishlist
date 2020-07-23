@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import {combineReducers} from "@reduxjs/toolkit";
+import {combineReducers} from "redux";
 import {modalReducer} from "./Modal/reducer";
 
 // export default createReducer(

@@ -10,6 +10,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-thunk": "^1.0.0",
+    "redux-thunk": "^2.3.0",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2"
   },
@@ -32,7 +33,7 @@
   },
   "scripts": {
     "start": "webpack --watch",
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "prettier:fix": "prettier 'src/**/*.{t,j}s' --write"
   }
 }
