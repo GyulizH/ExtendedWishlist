@@ -8,6 +8,7 @@ const Extension = props => {
 
     return (
       <div>
+        {JSON.stringify(props,null,2)}
     {props.isModalOpen && (<Modal/>)}
      </div>)
 }

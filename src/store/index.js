@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './rootReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
-
+console.log('extension loaded')
 // export const store = configureStore({
 //   reducer: rootReducer,
 //   middleware: [

@@ -12,7 +12,7 @@
     "react-thunk": "^1.0.0",
     "redux-thunk": "^2.3.0",
     "sass": "^1.26.8",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^9.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
@@ -32,8 +32,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "start": "webpack --watch",
-    "build": "webpack --mode development",
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production",
     "prettier:fix": "prettier 'src/**/*.{t,j}s' --write"
   }
 }

@@ -1,1 +1,10 @@
 
+.WishListModal {
+    background-color: white;
+    position: fixed;
+    top:0;
+    left:0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    z-index: 201; // Because of banner (.header  .header--header-banner)
+}
