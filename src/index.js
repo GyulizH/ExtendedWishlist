@@ -9,7 +9,6 @@ const modalWrapper = document.createElement('div')
 window.onload = function () {
   modalWrapper.className = 'wishlist--modal-wrapper'
   document.body.appendChild(modalWrapper)
-  console.log(store, "store")
   ReactDOM.render(
     <Provider store={store}>
       <Extension />
@@ -59,8 +58,13 @@ function getElements() {
         btnDiv.classList.add('buttonDiv')
         let btn1 = document.createElement('button')
         //btn1.innerHTML = 'Combination'
-        btn1.onclick = function () {
+        btn1.onclick = function (e) {
+          if (!e) e = window.event;
+          e.cancelBubble = true;
+          e.preventDefault()
+          e.stopPropagation()
           store.dispatch({ type: TOGGLE_MODAL })
+          //event.stopImmediatePropagation()
         }
         btn1.classList.add("buttonStyle")
 
@@ -69,9 +73,18 @@ function getElements() {
         buttonSvg.setAttribute('height',svgParentStyle['height'])
 
         let useElem = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-        useElem.setAttributeNS('http://www.w3.org/1999/xlink','href','src/Icons/clothes-hanger (1).svg')
+        useElem.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href','src/Icons/clothes-hanger (1).svg')
+        useElem.setAttribute('x','18')
+        useElem.setAttribute('y','18')
+        useElem.setAttribute('width','10');
+        useElem.setAttribute('height','10')
         useElem.classList.add('svgHanger')
         buttonSvg.appendChild(useElem)
+
+        let shadow = useElem.shadowRoot
+        if(shadow){
+          shadow.mode = 'open'
+        }
 
         let circleSvg = document.createElementNS("http://www.w3.org/2000/svg", "circle")
         circleSvg.setAttribute('fill',svgCircleStyle['fill'])
