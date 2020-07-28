@@ -48,7 +48,6 @@ function getElements() {
   document.body.append(combinationBtnStyle)
 
   let elms = document.getElementsByClassName('product-image product-image__plp')
-
   if (elms.length > 0) {
     for (let i = 0; i < elms.length; i++) {
       if (
@@ -57,9 +56,8 @@ function getElements() {
         let btnDiv = document.createElement('div')
         btnDiv.classList.add('buttonDiv')
         let btn1 = document.createElement('button')
-        //btn1.innerHTML = 'Combination'
         btn1.onclick = function (e) {
-          if (!e) e = window.event;
+          if (!e) e = window.e;
           e.cancelBubble = true;
           e.preventDefault()
           e.stopPropagation()

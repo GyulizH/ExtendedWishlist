@@ -2,9 +2,37 @@
 .WishListModal {
     background-color: white;
     position: fixed;
-    top:0;
-    left:0;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
     padding: 20px;
     border: 1px solid #ddd;
-    z-index: 201; // Because of banner (.header  .header--header-banner)
+    transform: translate(-50%, -50%);
+    z-index: 201;
+
+
+    &--Content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
+
+
+.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(52, 73, 94, 0.8);
+    z-index: 50;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.7s;
+}
+
+
+
+

@@ -11,16 +11,19 @@ class Modal extends React.Component{
     }
 
     closeModal(){
-        console.log("hey close modal")
         this.props.closeModal()
     }
 
     render() {
-        console.log("modal is opened")
         return(
+            <div>
+            <div className="mask"></div>
             <div className="WishListModal">
-                    <div>This modal is open</div>
-                    <button onClick={this.closeModal}> CLICK ME</button>
+                  <div className="WishListModal--Content">
+                      <div>This modal is open</div>
+                      <button onClick={this.closeModal}> CLICK ME</button>
+                  </div>
+            </div>
             </div>
             )
     }
@@ -32,6 +35,8 @@ const mapDispatchToProps= dispatch => {
     }
 }
 
-export default connect(null,mapDispatchToProps)(Modal)
+const mapStateToProps = state => ({ isModalOpen: state.modalReducer.isModalOpen })
+
+export default connect(mapStateToProps,mapDispatchToProps)(Modal)
 
 //useeffects
