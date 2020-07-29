@@ -35,6 +35,7 @@ export const Button = React.forwardRef(
               id={id}
               ref={ref}
               onClick={onClick}
+              className={className}
           >
               {buttonContents}
           </button>
