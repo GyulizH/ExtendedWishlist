@@ -2,7 +2,7 @@ import React from 'react';
 import "./Modal.scss"
 import {TOGGLE_MODAL} from "../../store/Modal/action";
 import { connect } from 'react-redux'
-import Button, {BTN_WITH_PLUS_ICON,BTN_NO_ICON} from "../Button";
+import Button, {BTN_WITH_PLUS_ICON} from "../Button";
 
 
 class Modal extends React.Component{
@@ -14,7 +14,7 @@ class Modal extends React.Component{
     closeModal(){
         this.props.closeModal()
     }
-//<Button variant={BTN_WITH_PLUS_ICON} onClick={this.closeModal}> CLICK ME</Button>
+
     render() {
         return(
             <div>

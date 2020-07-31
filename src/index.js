@@ -1,21 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { store } from './store/index.js'
+import {Provider} from 'react-redux'
+import {store} from './store/index.js'
 import Extension from './components/Extension'
-import { TOGGLE_MODAL } from './store/Modal/action'
+import {TOGGLE_MODAL} from './store/Modal/action'
 
 const modalWrapper = document.createElement('div')
 window.onload = function () {
-  modalWrapper.className = 'wishlist--modal-wrapper'
-  document.body.appendChild(modalWrapper)
-  ReactDOM.render(
-    <Provider store={store}>
-      <Extension />
-    </Provider>,
-    modalWrapper
-  )
-  getElements()
+    modalWrapper.className = 'wishlist--modal-wrapper'
+    document.body.appendChild(modalWrapper)
+    ReactDOM.render(
+        <Provider store={store}>
+            <Extension/>
+        </Provider>,
+        modalWrapper
+    )
+    getElements()
 }
 
 const combinationStyleString = `
@@ -23,6 +23,7 @@ const combinationStyleString = `
      position:absolute;
      top:10px;
      left:9px;
+     z-index:2;
    }
    .buttonStyle{
    z-index:999;
@@ -32,27 +33,29 @@ const combinationStyleString = `
 `
 
 function getElements() {
-  const combinationBtnStyle = document.createElement('style')
-  combinationBtnStyle.textContent = combinationStyleString
-  document.body.append(combinationBtnStyle)
+    const combinationBtnStyle = document.createElement('style')
+    combinationBtnStyle.textContent = combinationStyleString
+    document.body.append(combinationBtnStyle)
+    // let elms = document.querySelector("product-list__items").children
+    // console.log( document.querySelector(".product-list__items").children[0].appendChild(<div>hey</div>))
 
-  let elms = document.getElementsByClassName('product-image product-image__plp')
-  if (elms.length > 0) {
-    for (let i = 0; i < elms.length; i++) {
-      if (elms[i].getElementsByClassName('buttonStyle').length === 0) {
-        let btnDiv = document.createElement('div')
-        btnDiv.classList.add('buttonDiv')
-        let btn1 = document.createElement('button')
-        btn1.onclick = function (e) {
-          if (!e) e = window.e
-          e.cancelBubble = true
-          e.preventDefault()
-          e.stopPropagation()
-          store.dispatch({ type: TOGGLE_MODAL })
-          //event.stopImmediatePropagation()
-        }
-        btn1.classList.add('buttonStyle')
-        btn1.innerHTML = `<svg width="36px" height="36px">
+    let elms = document.querySelector('.product-list__items').children
+    console.log(elms, 'elms')
+    if (elms.length > 0) {
+        for (let i = 0; i < elms.length; i++) {
+            if (elms[i].getElementsByClassName('buttonStyle').length === 0) {
+                let btnDiv = document.createElement('div')
+                btnDiv.classList.add('buttonDiv')
+                let btn1 = document.createElement('button')
+                btn1.onclick = function (e) {
+                    if (!e) e = window.e
+                    e.cancelBubble = true
+                    e.preventDefault()
+                    e.stopPropagation()
+                    store.dispatch({type: TOGGLE_MODAL})
+                }
+                btn1.classList.add('buttonStyle')
+                btn1.innerHTML = `<svg width="36px" height="36px">
  <g fill="white" fill-rule="evenodd">
  <circle 
   fill="FFF"
@@ -65,11 +68,13 @@ function getElements() {
  </g> 
 </svg>`
 
-        btnDiv.appendChild(btn1)
-        elms[i].append(btnDiv)
-      }
+                btnDiv.appendChild(btn1)
+                let insertedBefore = elms[i].firstChild
+                elms[i].insertBefore(btnDiv, insertedBefore)
+            }
+        }
     }
-  }
 }
+
 getElements()
 window.addEventListener('scroll', getElements)
