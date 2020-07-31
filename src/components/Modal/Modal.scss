@@ -2,13 +2,13 @@
 .WishListModal {
     background-color: white;
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: -webkit-calc(50% - 30vh);
+    left: -webkit-calc(50% - 25vw);
     width: 50vw;
     height: 60vh;
     padding: 20px;
     border: 1px solid #ddd;
-    transform: translate(-50%, -50%);
+    //transform: translate(-50%, -50%);
     z-index: 202;
 
 

@@ -20,3 +20,4 @@ export const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 )
 window.store = store
+console.log(store.getState(), "storeee")
