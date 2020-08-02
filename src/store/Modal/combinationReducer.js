@@ -1,11 +1,10 @@
-import {ADD_SELECTED_PRODUCT} from "./combinationAction";
+import {ADD_NEW_COMBINATION} from "./combinationAction";
 
 export const combinationReducer = (state = [], action) => {
-    console.log("combination reducer",action.product)
-    if(action.type === ADD_SELECTED_PRODUCT) {
+    if(action.type === ADD_NEW_COMBINATION) {
         return [
             ...state,
-            action.product
+            action.combination
         ]
     }
     return state

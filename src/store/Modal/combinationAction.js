@@ -1,9 +1,8 @@
-export const ADD_SELECTED_PRODUCT = 'ADD SELECTED PRODUCT'
+export const ADD_NEW_COMBINATION = 'ADD NEW COMBINATION'
 
-export const addSelectedProduct = (product) => {
-    console.log("addselected",product)
+export const addNewCombination = (combination) => {
     return {
-        type: ADD_SELECTED_PRODUCT,
-        product
+        type: ADD_NEW_COMBINATION,
+        combination
     }
 }

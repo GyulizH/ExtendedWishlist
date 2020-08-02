@@ -6,7 +6,6 @@ const initialState = {
 }
 
 export const modalReducer = (state = initialState, action) => {
-  console.log(action.product,"actiooonn")
   if (action.type === TOGGLE_MODAL) {
     return {
       ...state,

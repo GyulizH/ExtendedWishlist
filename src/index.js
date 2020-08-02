@@ -24,6 +24,7 @@ const combinationStyleString = `
      top:10px;
      left:9px;
      z-index:2;
+     cursor:pointer;
    }
    .buttonStyle{
    z-index:999;
@@ -50,6 +51,10 @@ function createButton(){
     return btn1
 }
 
+function generateHashCode(s) {
+    return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+}
+
 function attachCombinationButtons() {
     const combinationBtnStyle = document.createElement('style')
     combinationBtnStyle.textContent = combinationStyleString
@@ -70,7 +75,8 @@ function attachCombinationButtons() {
                     let selectedProduct = {
                         name: elms[i].getElementsByTagName('h4')[0].innerText,
                         price: elms[i].getElementsByClassName("product-tile__price")[0].innerText,
-                        image:[elms[i].getElementsByClassName("product-image__image")[0].src,elms[i].getElementsByClassName("product-image__image")[1].src]
+                        image:[elms[i].getElementsByClassName("product-image__image")[0]?.src,elms[i].getElementsByClassName("product-image__image")[1]?.src],
+                        id:generateHashCode(elms[i].getElementsByClassName("product-image__image")[0]?.src)
                     }
                     store.dispatch(toggleModal(selectedProduct))
                 }

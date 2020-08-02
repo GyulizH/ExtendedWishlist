@@ -3,32 +3,63 @@ import "./Modal.scss"
 import {TOGGLE_MODAL} from "../../store/Modal/action";
 import { connect } from 'react-redux'
 import Button, {BTN_WITH_PLUS_ICON} from "../Button";
-import {addSelectedProduct} from "../../store/Modal/combinationAction";
+import {addNewCombination} from "../../store/Modal/combinationAction";
+import {debounce} from 'lodash';
 
 
 class Modal extends React.Component{
     constructor(props) {
         super(props);
         this.closeModal = this.closeModal.bind(this)
-        this.addSelectedProduct = this.addSelectedProduct.bind(this)
+        this.state = {
+            showForm : false,
+            combinationTitle:''
+        }
+    }
+
+    isEnterKey (event) {
+        return event.key === 'Enter'
+    }
+
+
+    //debounce calismiyor galiba,synthetic event olayi
+    addNewCombination= (e) => {
+        e.persist()
+        let newCombination = {
+            id:Date.now(),
+            name:e.target.value,
+            product: this.props.selectedProduct
+        }
+        if(this.isEnterKey(e) === true){
+            console.log("heyyy i cam inside key")
+            console.log(newCombination,"new combination")
+            e.currentTarget.blur()
+           this.props.addNewCombination(newCombination)
+        }
     }
 
     closeModal(){
         this.props.closeModal()
     }
 
-    addSelectedProduct(){
-        console.log(this.props.selectedProduct.price,"modaldayiz")
-       this.props.addProduct(this.props.selectedProduct)
+    openForm = () => {
+        this.setState({showForm:true})
     }
-
+    showForm = () => {
+        return(
+            <div>
+                    <input type="text" onKeyUp={this.addNewCombination}/>
+            </div>
+        )
+    }
     render() {
         return(
             <div>
-            <div className="mask"></div>
+            <div onClick={this.closeModal} className="mask"></div>
             <div className="WishListModal">
-                <Button className="WishList-Plus-Button" variant={BTN_WITH_PLUS_ICON} onClick={this.addSelectedProduct}> CLICK ME</Button>
+                <Button className="WishList-Plus-Button" variant={BTN_WITH_PLUS_ICON} onClick={this.openForm}> CLICK ME</Button>
                   <div className="WishListModal--Content">
+                      {this.state.showForm ? this.showForm():null}
                       <div>This modal is open</div>
                   </div>
                 <Button  className="WishList-Close-Button" onClick={this.closeModal}> CLICK ME</Button>
@@ -41,7 +72,7 @@ class Modal extends React.Component{
 const mapDispatchToProps= dispatch => {
     return {
         closeModal : () => dispatch({type: TOGGLE_MODAL}),
-        addProduct: (product) => dispatch(addSelectedProduct(product))
+        addNewCombination: (combination) => dispatch(addNewCombination(combination))
     }
 }
 
