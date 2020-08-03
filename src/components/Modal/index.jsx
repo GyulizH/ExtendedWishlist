@@ -2,9 +2,8 @@ import React from 'react';
 import "./Modal.scss"
 import {TOGGLE_MODAL} from "../../store/Modal/action";
 import { connect } from 'react-redux'
-import Button, {BTN_WITH_PLUS_ICON} from "../Button";
+import Button, {BTN_WITH_PLUS_ICON,BTN_NO_ICON,BTN_WITH_CROSS_ICON} from "../Button";
 import {addNewCombination} from "../../store/Modal/combinationAction";
-import {debounce} from 'lodash';
 import Editable from "../Editable/Editable";
 
 
@@ -22,14 +21,11 @@ class Modal extends React.Component{
         return event.key === 'Enter'
     }
 
-    //stateten daha once kaydedilmis elementler gelmiyor
     componentDidUpdate(prevProps) {
         if (prevProps.combinationList !== this.props.combinationList) {
-            console.log(this.props.combinationList,"componentdidupdate")
         }
     }
 
-    //debounce calismiyor galiba,synthetic event olayi
     addNewCombination= (e) => {
         e.persist()
         this.setState({combinationTitle: e.target.value})
@@ -52,7 +48,6 @@ class Modal extends React.Component{
         this.setState({showForm:true})
     }
     showForm = () => {
-        console.log("showform")
         return(
             <div>
                 <Editable
@@ -62,8 +57,7 @@ class Modal extends React.Component{
                 >
                     <input
                         type="text"
-                        onKeyUp={this.addNewCombination}
-                        value={this.state.combinationTitle}
+                        onChange={this.addNewCombination}
                     />
                 </Editable>
             </div>
@@ -74,12 +68,12 @@ class Modal extends React.Component{
             <div>
             <div onClick={this.closeModal} className="mask"></div>
             <div className="WishListModal">
-                <Button className="WishList-Plus-Button" variant={BTN_WITH_PLUS_ICON} onClick={this.openForm}> CLICK ME</Button>
+                <Button className="WishList-Plus-Button" variant={BTN_WITH_PLUS_ICON} onClick={this.openForm}> Add New Combination</Button>
                   <div className="WishListModal--Content">
                       {this.state.showForm ? this.showForm():null}
                       <div>This modal is open</div>
                   </div>
-                <Button  className="WishList-Close-Button" onClick={this.closeModal}> CLICK ME</Button>
+                <Button  className="WishList-Close-Button" onClick={this.closeModal} variant={BTN_WITH_CROSS_ICON}></Button>
             </div>
             </div>
             )

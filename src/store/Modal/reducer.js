@@ -2,7 +2,7 @@ import { TOGGLE_MODAL } from './action'
 
 const initialState = {
   isModalOpen: false,
-  selectedProduct: {}
+  selectedProduct: {},
 }
 
 export const modalReducer = (state = initialState, action) => {
@@ -10,7 +10,7 @@ export const modalReducer = (state = initialState, action) => {
     return {
       ...state,
       isModalOpen: !state.isModalOpen,
-      selectedProduct: action.product
+      selectedProduct: action.product,
     }
   }
   return state
