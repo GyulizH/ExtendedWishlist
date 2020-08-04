@@ -3,8 +3,8 @@ import { modalReducer } from './Modal/reducer'
 import { combinationReducer } from './Modal/combinationReducer'
 
 export default combineReducers({
-  modalReducer,
-  combinationReducer,
+  modal: modalReducer,
+  combinations: combinationReducer,
 })
 
 //console.log(store.getState(),"storreee")

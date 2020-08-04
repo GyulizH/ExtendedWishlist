@@ -8,5 +8,5 @@ const Extension = props => {
     {props.isModalOpen && (<Modal/>)}
      </div>)
 }
-const mapStateToProps = state => ({ isModalOpen: state.modalReducer.isModalOpen })
+const mapStateToProps = state => ({ isModalOpen: state.modal.isModalOpen })
 export default connect(mapStateToProps)(Extension)

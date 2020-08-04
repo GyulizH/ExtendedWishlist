@@ -12,55 +12,50 @@ class Modal extends React.Component{
         super(props);
         this.closeModal = this.closeModal.bind(this)
         this.state = {
-            showForm : false,
+            isAddNewCombination : false,
             combinationTitle:''
         }
-    }
-
-    isEnterKey (event) {
-        return event.key === 'Enter'
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.combinationList !== this.props.combinationList) {
         }
+        console.log(this.props.combinationList)
     }
 
-    addNewCombination= (e) => {
-        e.persist()
-        this.setState({combinationTitle: e.target.value})
+    sendNewCombinationForm= (e) => {
         let newCombination = {
             id:Date.now(),
-            name:e.target.value,
+            name:this.state.combinationTitle,
             product: this.props.selectedProduct
         }
-        if(this.isEnterKey(e) === true){
-            e.currentTarget.blur()
            this.props.addNewCombination(newCombination)
-        }
+        this.setState({isAddNewCombination: false})
+
+        e.preventDefault()
     }
 
     closeModal(){
         this.props.closeModal()
     }
 
-    openForm = () => {
-        this.setState({showForm:true})
+    openAddNewCombinationBox = () => {
+        this.setState({isAddNewCombination: true})
     }
-    showForm = () => {
+    addEditableCombinationField = () => {
         return(
-            <div>
                 <Editable
                     text={this.state.combinationTitle}
                     type="text"
                     isNew={true}
                 >
-                    <input
-                        type="text"
-                        onChange={this.addNewCombination}
-                    />
+                    <form onSubmit={this.sendNewCombinationForm}>
+                        <input
+                            type="text"
+                            onChange={e => {this.setState({combinationTitle : e.target.value})}}
+                        />
+                    </form>
                 </Editable>
-            </div>
         )
     }
     render() {
@@ -68,10 +63,21 @@ class Modal extends React.Component{
             <div>
             <div onClick={this.closeModal} className="mask"></div>
             <div className="WishListModal">
-                <Button className="WishList-Plus-Button" variant={BTN_WITH_PLUS_ICON} onClick={this.openForm}> Add New Combination</Button>
                   <div className="WishListModal--Content">
-                      {this.state.showForm ? this.showForm():null}
-                      <div>This modal is open</div>
+                      {this.props.combinationList.map(combination => {
+                          return (
+                              <li>
+                                  {combination.name}
+                              </li>
+                          )
+                      })}
+                      {this.state.isAddNewCombination? this.addEditableCombinationField():
+                          <Button
+                              variant={BTN_WITH_PLUS_ICON}
+                              onClick={this.openAddNewCombinationBox}
+                          >
+                              Add New Combination
+                          </Button>}
                   </div>
                 <Button  className="WishList-Close-Button" onClick={this.closeModal} variant={BTN_WITH_CROSS_ICON}></Button>
             </div>
@@ -88,11 +94,10 @@ const mapDispatchToProps= dispatch => {
 }
 
 const mapStateToProps = state => ({
-    isModalOpen: state.modalReducer.isModalOpen,
-    selectedProduct:state.modalReducer.selectedProduct,
-    combinationList: state.combinationReducer
+    isModalOpen: state.modal.isModalOpen,
+    selectedProduct:state.modal.selectedProduct,
+    combinationList: state.combinations
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Modal)
 
-//useeffects
