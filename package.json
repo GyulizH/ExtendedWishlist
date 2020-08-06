@@ -34,7 +34,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "start": "webpack --mode development --watch",
+    "dev": "webpack --mode development --watch",
     "build": "webpack --mode production",
     "prettier:fix": "prettier 'src/**/*.{t,j}s' --write"
   }

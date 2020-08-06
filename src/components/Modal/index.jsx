@@ -16,11 +16,10 @@ class Modal extends React.Component{
             combinationTitle:''
         }
     }
-
+//do I need this?
     componentDidUpdate(prevProps) {
         if (prevProps.combinationList !== this.props.combinationList) {
         }
-        console.log(this.props.combinationList)
     }
 
     sendNewCombinationForm= (e) => {
