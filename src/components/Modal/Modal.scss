@@ -16,6 +16,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        border: 3px solid green;
+        margin-top: 10px;
+        height: 53vh;
     }
 }
 
@@ -43,6 +46,7 @@
     position: absolute;
     top:0;
     left:0;
+    padding: 0;
 }
 
 

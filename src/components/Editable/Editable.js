@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 //handle focus
-const Editable = ({ text, type, isNew, children, ...props }) => {
+const Editable = ({ text, type,keyId,isNew, children, ...props }) => {
   const [isEditing, setEditing] = useState(false)
 
   const handleInput = (event) => {}

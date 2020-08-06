@@ -22,6 +22,7 @@ class Modal extends React.Component{
         }
     }
 
+//I might need to order combinations by id meaning date
     sendNewCombinationForm= (e) => {
         let newCombination = {
             id:Date.now(),
@@ -57,6 +58,10 @@ class Modal extends React.Component{
                 </Editable>
         )
     }
+
+    //add go to combination button to each combination
+    //redux and onsubmit onchange
+    //onclickling outside the input field return to the old name
     render() {
         return(
             <div>
@@ -65,9 +70,18 @@ class Modal extends React.Component{
                   <div className="WishListModal--Content">
                       {this.props.combinationList.map(combination => {
                           return (
-                              <li>
-                                  {combination.name}
-                              </li>
+                                  <Editable
+                                      text={combination.name}
+                                      type="text"
+                                      key={combination.id}
+                                  >
+                                      <form onSubmit={console.log("submit")}>
+                                          <input
+                                              type="text"
+                                              onChange={console.log("submit")}
+                                          />
+                                      </form>
+                                  </Editable>
                           )
                       })}
                       {this.state.isAddNewCombination? this.addEditableCombinationField():

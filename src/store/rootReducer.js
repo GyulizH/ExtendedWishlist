@@ -7,4 +7,3 @@ export default combineReducers({
   combinations: combinationReducer,
 })
 
-//console.log(store.getState(),"storreee")
