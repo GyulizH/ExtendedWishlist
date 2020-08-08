@@ -68,31 +68,39 @@ class Modal extends React.Component{
             <div onClick={this.closeModal} className="mask"></div>
             <div className="WishListModal">
                   <div className="WishListModal--Content">
+                      <div>
+                      {this.props.combinationList.length> 0 &&
+                      <div>
+                          <label className="WishListModal--Title">ADD TO... </label>
+                          <Button  className="WishList-Close-Button" onClick={this.closeModal} variant={BTN_WITH_CROSS_ICON}></Button>
+                      </div>}
+                      <ul>
                       {this.props.combinationList.map(combination => {
                           return (
-                                  <Editable
-                                      text={combination.name}
-                                      type="text"
-                                      key={combination.id}
-                                  >
-                                      <form onSubmit={console.log("submit")}>
-                                          <input
-                                              type="text"
-                                              onChange={console.log("submit")}
-                                          />
-                                      </form>
-                                  </Editable>
+                              <li className="WishList-Combination-List-Item" key={combination.id}>
+                                  <label className="checkboxContainer">
+                                      <input
+                                          type="checkbox"
+                                      />
+                                      <span className="checkmark"></span>
+                                      {combination.name}
+                                  </label>
+                              </li>
                           )
                       })}
-                      {this.state.isAddNewCombination? this.addEditableCombinationField():
-                          <Button
-                              variant={BTN_WITH_PLUS_ICON}
-                              onClick={this.openAddNewCombinationBox}
-                          >
-                              Add New Combination
-                          </Button>}
+                      </ul>
+                      <div>
+                          {this.state.isAddNewCombination? this.addEditableCombinationField():
+                              <Button
+                                  variant={BTN_WITH_PLUS_ICON}
+                                  onClick={this.openAddNewCombinationBox}
+                                  className="WishList-Plus-Button-Button"
+                              >
+                                  Add New Combination
+                              </Button>}
+                      </div>
+                      </div>
                   </div>
-                <Button  className="WishList-Close-Button" onClick={this.closeModal} variant={BTN_WITH_CROSS_ICON}></Button>
             </div>
             </div>
             )

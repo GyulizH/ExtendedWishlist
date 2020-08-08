@@ -6,4 +6,3 @@ export default combineReducers({
   modal: modalReducer,
   combinations: combinationReducer,
 })
-
