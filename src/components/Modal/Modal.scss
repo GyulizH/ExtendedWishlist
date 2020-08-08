@@ -13,11 +13,8 @@
 
 
     &--Content{
-        display: flex;
-        flex-direction: column;
-        border: 3px solid green;
         margin-top: 10px;
-        height: 53vh;
+        height: 55vh;
     }
 }
 
@@ -36,27 +33,23 @@
 }
 
 .WishList-Plus-Button{
-    padding: 10px;
+    padding: 0px;
 }
 
 .WishList-Close-Button{
     position: absolute;
-    top:0;
+    top:20px;
     right:0;
-    padding: 0;
+    padding-bottom: 0;
 }
 .WishList-Combination-List-Item{
    list-style: none;
-}
-
-li:last-child{
     padding-bottom: 10px;
 }
 
 .WishListModal--Title{
     font-size: 20px;
     padding: 10px;
-    border-bottom: 1px solid lightgray;
 }
 
 .modalCheckBox[type="checkbox"] {
@@ -108,6 +101,14 @@ li:last-child{
         top: 45%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.WishListModal-Header{
+    border-bottom: 1px solid grey;
+    padding-bottom: 10px;
+}
+.WishListModal-List{
+    padding-top: 10px;
 }
 
 

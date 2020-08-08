@@ -70,11 +70,11 @@ class Modal extends React.Component{
                   <div className="WishListModal--Content">
                       <div>
                       {this.props.combinationList.length> 0 &&
-                      <div>
+                      <div className="WishListModal-Header">
                           <label className="WishListModal--Title">ADD TO... </label>
                           <Button  className="WishList-Close-Button" onClick={this.closeModal} variant={BTN_WITH_CROSS_ICON}></Button>
                       </div>}
-                      <ul>
+                      <ul className="WishListModal-List">
                       {this.props.combinationList.map(combination => {
                           return (
                               <li className="WishList-Combination-List-Item" key={combination.id}>
@@ -94,7 +94,7 @@ class Modal extends React.Component{
                               <Button
                                   variant={BTN_WITH_PLUS_ICON}
                                   onClick={this.openAddNewCombinationBox}
-                                  className="WishList-Plus-Button-Button"
+                                  className="WishList-Plus-Button"
                               >
                                   Add New Combination
                               </Button>}
