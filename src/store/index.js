@@ -1,4 +1,3 @@
-import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './rootReducer'
@@ -20,3 +19,6 @@ store.subscribe(() => {
 })
 
 window.store = store
+typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
+    ? window.devToolsExtension()
+    : f => f

@@ -8,7 +8,12 @@
     {
       "matches": ["*://*.tommy.com/*"],
       "run_at": "document_idle",
-      "js": ["bundle.js"]
+      "js": ["modal.bundle.js"]
+    }
+    {
+      "matches": ["*://*.tommy.com/wishlist*"],
+      "run_at": "document_idle",
+      "js": ["wishlist.bundle.js"]
     }
   ]
 }

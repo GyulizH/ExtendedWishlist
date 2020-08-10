@@ -61,7 +61,7 @@ class Modal extends React.Component{
     }
 
     toggleCheckBox=(e) => {
-        // e.preventDefault()
+         e.preventDefault()
         if(e.target.type === 'checkbox'){
             let  fromStrToNumber = parseInt(e.target.value,10)
             this.props.toggleCombinationCheckbox(fromStrToNumber)
@@ -90,9 +90,9 @@ class Modal extends React.Component{
                                   <label className="checkboxContainer">
                                       <input
                                           type="checkbox"
-                                          onChange={console.log("hey")}
                                           id={combination.id}
-                                         // checked={combination.checked}
+                                          checked={combination.checked}
+                                          onChange={this.toggleCheckBox}
                                       />
                                       <span className="checkmark"></span>
                                       {combination.name}

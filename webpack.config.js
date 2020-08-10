@@ -2,10 +2,13 @@ const path = require("path");
 const CopyPlugin= require('copy-webpack-plugin')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+       modal: './src/index.js',
+       wishlist:'./src/wishlist.js'
+    },
     output: {
         path: path.join(__dirname, "/dist"),
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
     },
     resolve: {
         extensions: ['.js', '.jsx']

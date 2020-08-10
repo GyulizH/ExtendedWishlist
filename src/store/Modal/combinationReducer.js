@@ -13,7 +13,7 @@ export const combinationReducer = (state = [], action) => {
       (combination) => combination.id === action.id
     )
     selectedCombination.checked = !selectedCombination.checked
-    return [...state, selectedCombination]
+    return [...state]
   }
   return state
 }
