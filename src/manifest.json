@@ -9,7 +9,7 @@
       "matches": ["*://*.tommy.com/*"],
       "run_at": "document_idle",
       "js": ["modal.bundle.js"]
-    }
+    },
     {
       "matches": ["*://*.tommy.com/wishlist*"],
       "run_at": "document_idle",
