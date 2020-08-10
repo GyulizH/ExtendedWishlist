@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx']
     },
-    devtool: "source-map",
+    devtool: "eval-source-map",
     module: {
         rules: [
             {
