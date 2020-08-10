@@ -71,12 +71,12 @@
 
 .checkboxContainer{
     display: inline-block;
-    padding-left: 30px;
     padding-top:5px;
+    padding-right: 100px;
     position: relative;
     cursor: pointer;
     font-size: 22px;
-    user-select: none;
+
 }
 
 .checkboxContainer .checkmark{
@@ -84,7 +84,7 @@
     width: 25px;
     height: 25px;
     position: absolute;
-    left: 0;
+    right: 0;
     top:0;
 }
 
@@ -109,6 +109,14 @@
 }
 .WishListModal-List{
     padding-top: 10px;
+}
+
+.Modal-Editable-Input{
+    border: none;
+    border-bottom: 1px solid grey;
+    font-size: 20px;
+    margin-left: 30px;
+    width: 40vw;
 }
 
 

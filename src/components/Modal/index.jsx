@@ -2,8 +2,8 @@ import React from 'react';
 import "./Modal.scss"
 import {TOGGLE_MODAL} from "../../store/Modal/action";
 import { connect } from 'react-redux'
-import Button, {BTN_WITH_PLUS_ICON,BTN_NO_ICON,BTN_WITH_CROSS_ICON} from "../Button";
-import {addNewCombination} from "../../store/Modal/combinationAction";
+import Button, {BTN_WITH_PLUS_ICON,BTN_WITH_CROSS_ICON} from "../Button";
+import {addNewCombination,toggleCombinationCheckbox} from "../../store/Modal/combinationAction";
 import Editable from "../Editable/Editable";
 
 
@@ -27,11 +27,11 @@ class Modal extends React.Component{
         let newCombination = {
             id:Date.now(),
             name:this.state.combinationTitle,
-            product: this.props.selectedProduct
+            product: this.props.selectedProduct,
+            checked:false
         }
-           this.props.addNewCombination(newCombination)
+        this.props.addNewCombination(newCombination)
         this.setState({isAddNewCombination: false})
-
         e.preventDefault()
     }
 
@@ -53,11 +53,20 @@ class Modal extends React.Component{
                         <input
                             type="text"
                             onChange={e => {this.setState({combinationTitle : e.target.value})}}
+                            className="Modal-Editable-Input"
                         />
                     </form>
                 </Editable>
         )
     }
+
+    toggleCheckBox=(e) => {
+        // e.preventDefault()
+        if(e.target.type === 'checkbox'){
+            let  fromStrToNumber = parseInt(e.target.value,10)
+            this.props.toggleCombinationCheckbox(fromStrToNumber)
+        }
+}
 
     //add go to combination button to each combination
     //redux and onsubmit onchange
@@ -81,6 +90,9 @@ class Modal extends React.Component{
                                   <label className="checkboxContainer">
                                       <input
                                           type="checkbox"
+                                          onChange={console.log("hey")}
+                                          id={combination.id}
+                                         // checked={combination.checked}
                                       />
                                       <span className="checkmark"></span>
                                       {combination.name}
@@ -110,7 +122,9 @@ class Modal extends React.Component{
 const mapDispatchToProps= dispatch => {
     return {
         closeModal : () => dispatch({type: TOGGLE_MODAL}),
-        addNewCombination: (combination) => dispatch(addNewCombination(combination))
+        addNewCombination: (combination) => dispatch(addNewCombination(combination)),
+        toggleCombinationCheckbox:(id) => dispatch(toggleCombinationCheckbox(id))
+
     }
 }
 
