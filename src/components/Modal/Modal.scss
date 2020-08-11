@@ -72,10 +72,10 @@
 .checkboxContainer{
     display: inline-block;
     padding-top:5px;
-    padding-right: 100px;
     position: relative;
     cursor: pointer;
     font-size: 22px;
+    width: 100%;
 
 }
 
@@ -115,7 +115,6 @@
     border: none;
     border-bottom: 1px solid grey;
     font-size: 20px;
-    margin-left: 30px;
     width: 40vw;
 }
 

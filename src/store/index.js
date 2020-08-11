@@ -20,5 +20,5 @@ store.subscribe(() => {
 
 window.store = store
 typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
-    ? window.devToolsExtension()
-    : f => f
+  ? window.devToolsExtension()
+  : (f) => f

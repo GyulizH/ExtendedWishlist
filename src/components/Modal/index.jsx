@@ -16,6 +16,7 @@ class Modal extends React.Component {
     this.state = {
       isAddNewCombination: false,
       combinationTitle: '',
+      checkedCombinations: new Map()
     }
   }
   //do I need this?
@@ -29,7 +30,7 @@ class Modal extends React.Component {
     let newCombination = {
       id: Date.now(),
       name: this.state.combinationTitle,
-      product: this.props.selectedProduct,
+      products: [this.props.selectedProduct],
       checked: false,
     }
     this.props.addNewCombination(newCombination)
@@ -61,8 +62,14 @@ class Modal extends React.Component {
   }
 
   toggleCheckBox = (e) => {
-    let fromStrToNumber = parseInt(e.target.id, 10)
-    this.props.toggleCombinationCheckbox(fromStrToNumber)
+    let id = this.props.selectedProduct.id
+    const item = e.target.id
+    const isChecked = e.target.checked
+    this.setState(prevState => ({checkedCombinations: prevState.checkedCombinations.set(item,isChecked)}))
+    let selectedCheckboxes = {
+       [id]: this.state.checkedCombinations
+    }
+    this.props.toggleCheckBox(selectedCheckboxes)
   }
 
   //add go to combination button to each combination
@@ -96,7 +103,7 @@ class Modal extends React.Component {
                         <input
                           type="checkbox"
                           id={combination.id}
-                          checked={combination.checked}
+                          checked={this.state.checkedCombinations.get(combination.name)}
                           onChange={this.toggleCheckBox}
                         />
                         <span className="checkmark"></span>
@@ -132,7 +139,7 @@ const mapDispatchToProps = (dispatch) => {
     closeModal: () => dispatch({ type: TOGGLE_MODAL }),
     addNewCombination: (combination) =>
       dispatch(addNewCombination(combination)),
-    toggleCombinationCheckbox: (id) => dispatch(toggleCombinationCheckbox(id)),
+    toggleCheckBox: (obj) => dispatch(toggleCombinationCheckbox(obj)),
   }
 }
 

@@ -10,9 +10,9 @@ export const addNewCombination = (combination) => {
   }
 }
 
-export const toggleCombinationCheckbox = (id) => {
+export const toggleCombinationCheckbox = (selectedCheckBoxes) => {
   return {
     type: TOGGLE_COMBINATION_CHECKBOX,
-    id,
+    selectedCheckBoxes,
   }
 }
