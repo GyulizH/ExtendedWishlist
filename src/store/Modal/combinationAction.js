@@ -12,10 +12,8 @@ export const addNewCombination = (combination) => {
 export const addProductToCombination = (id) => {
   let product = store.getState().modal.selectedProduct
   return {
-    type:ADD_PRODUCT_TO_COMBINATION,
+    type: ADD_PRODUCT_TO_COMBINATION,
     product,
-    id
+    id,
   }
 }
-
-
