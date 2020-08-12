@@ -17,7 +17,7 @@ store.subscribe(() => {
     combinations: store.getState().combinations,
   })
 })
-
+console.log(store.getState(),"store")
 window.store = store
 typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
   ? window.devToolsExtension()
