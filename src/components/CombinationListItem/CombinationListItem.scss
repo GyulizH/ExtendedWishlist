@@ -1,0 +1,32 @@
+.Combination-Container{
+  display: flex;
+  flex-direction: row;
+}
+
+.Combination-Image-Container{
+
+}
+
+.Combination-a-tag{
+  width: 11%;
+}
+
+.Combination-Info-Container{
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.CombinationList-Item-Info{
+
+}
+
+.Combination-Actions{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  button{
+    min-width: 50px
+  }
+}

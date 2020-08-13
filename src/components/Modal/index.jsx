@@ -70,7 +70,6 @@ class Modal extends React.Component {
     //redux and onsubmit onchange
     //onclickling outside the input field return to the old name
     render() {
-      console.log(this.props.combinationList,"combination list")
         return (
             <div>
                 <div onClick={this.closeModal} className="mask"></div>
@@ -88,7 +87,7 @@ class Modal extends React.Component {
                                 </div>
                             )}
                             <ul className="WishListModal-List">
-                                {this.props.combinationList.combinations.map((combination) => {
+                                {this.props.combinationList.map((combination) => {
                                     return (
                                         <li
                                             className="WishList-Combination-List-Item"
@@ -98,7 +97,7 @@ class Modal extends React.Component {
                                                 <input
                                                     type="checkbox"
                                                     id={combination.id}
-                                                    //checked={combination.isChecked}//.isChecked
+                                                    checked={combination.isChecked}//.isChecked
                                                     onChange={this.toggleCheckBox}
                                                 />
                                                 <span className="checkmark"></span>
@@ -142,13 +141,12 @@ const mapStateToProps = (state) => (
     {
     isModalOpen: state.modal.isModalOpen,
     selectedProduct: state.modal.selectedProduct,
-    // combinationList: state.combinations.map(combination => {
-    //     return {
-    //         ...combination,
-    //         isChecked: combination.products.find(product => product.id === state.modal.selectedProduct.id)
-    //     }
-    // }),
-    combinationList:state.combinations
+    combinationList: state.combinations.map(combination => {
+        return {
+            ...combination,
+            isChecked: combination.products.find(product => product.id === state.modal.selectedProduct.id)
+        }
+    }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal)

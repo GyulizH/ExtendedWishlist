@@ -1,3 +1,4 @@
+import { store } from '../index'
 export const ADD_NEW_COMBINATION = 'ADD NEW COMBINATION'
 export const ADD_PRODUCT_TO_COMBINATION = 'ADD PRODUCT TO COMBINATION'
 

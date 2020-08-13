@@ -4,8 +4,6 @@ import React, { useState } from 'react'
 const Editable = ({ text, type, keyId, isNew, children, ...props }) => {
   const [isEditing, setEditing] = useState(false)
 
-  const handleInput = (event) => {}
-
   return (
     <section {...props}>
       {isEditing || isNew ? (

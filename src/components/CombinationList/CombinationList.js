@@ -1,4 +1,5 @@
 import React from 'react'
+import CombinationListItem from '../CombinationListItem/CombinationListItem'
 
 class CombinationList extends React.Component {
   constructor(props) {
@@ -10,14 +11,16 @@ class CombinationList extends React.Component {
           id: '34',
           totalCost: '100 €',
           numberOfItems: '5',
-          img: null,
+          src:
+            'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW27462_DW5_main_listing?$thumb$',
         },
         {
           name: 'Combination 2',
           id: '35',
           totalCost: '134 €',
           numberOfItems: '4',
-          img: null,
+          src:
+            'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW27462_DW5_main_listing?$thumb$',
         },
       ],
     }
@@ -26,24 +29,17 @@ class CombinationList extends React.Component {
   render() {
     return (
       <div className="CombinationList-Wrapper">
-        <div className=".Combination-Container">
-          <a>
-            <div className=".Combination-ImageContainer">
-              <img />
-            </div>
-          </a>
-          <div className=".Combination-Info-Container">
-            <div className=".CombinationList-Item-Info">
-              <p>NAME</p>
-              <p>NUMBER OF ITEMS</p>
-              <p>TOTAL COST</p>
-            </div>
-          </div>
-          <div className=".Combination-Actions">
-            <button>GO TO COMBINATION DETAILS</button>
-            <button>GO TO CHECKOUT</button>
-          </div>
-        </div>
+        {this.state.list.map((item) => {
+          return (
+            <CombinationListItem
+              name={item.name}
+              id={item.id}
+              totalCost={item.totalCost}
+              numberOfItems={item.numberOfItems}
+              src={item.src}
+            />
+          )
+        })}
       </div>
     )
   }

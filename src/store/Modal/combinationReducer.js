@@ -13,13 +13,13 @@ export const combinationReducer = (state = [], action) => {
   }
 
   if (action.type === ADD_PRODUCT_TO_COMBINATION) {
-    const c = state.find((combination) => {
-      return combination.id === action.id
+    const selectedCombination = state.find((combination) => {
+      console.log(combination.id, parseInt(action.id, 10))
+      return combination.id === parseInt(action.id, 10)
     })
-    let newArr = c.products
-    newArr.push(action.product)
-    let newC = { ...c, products: newArr }
-    return [...state, newC]
+
+    selectedCombination.products.push(action.product)
+    return [...state]
   }
 
   return state
