@@ -4,7 +4,7 @@ import {TOGGLE_MODAL} from '../../store/Modal/action'
 import {connect} from 'react-redux'
 import Button, {BTN_WITH_PLUS_ICON, BTN_WITH_CROSS_ICON} from '../Button'
 import {
-    addNewCombination, addProductToCombination
+    addNewCombination, addProductToCombination, removeProductFromCombination
 } from '../../store/Modal/combinationAction'
 import Editable from '../Editable/Editable'
 
@@ -15,7 +15,6 @@ class Modal extends React.Component {
         this.state = {
             isAddNewCombination: false,
             combinationTitle: '',
-            checkedCombinations: new Map()
         }
     }
 
@@ -32,7 +31,6 @@ class Modal extends React.Component {
             id: Date.now(),
             name: this.state.combinationTitle,
             products: [this.props.selectedProduct],
-            checked: false,
         }
         this.props.addNewCombination(newCombination)
         this.setState({isAddNewCombination: false})
@@ -63,7 +61,12 @@ class Modal extends React.Component {
 
     toggleCheckBox = (e) => {
       const combinationId = e.target.id
-       this.props.addProductToCombination(combinationId)
+      const isChecked = e.target.checked
+        if(isChecked){
+            this.props.addProductToCombination(combinationId)
+        }else{
+          this.props.removeProductFromCombination(combinationId)
+        }
     }
 
     //add go to combination button to each combination
@@ -97,7 +100,7 @@ class Modal extends React.Component {
                                                 <input
                                                     type="checkbox"
                                                     id={combination.id}
-                                                    checked={combination.isChecked}//.isChecked
+                                                    checked={combination.isChecked || false }
                                                     onChange={this.toggleCheckBox}
                                                 />
                                                 <span className="checkmark"></span>
@@ -133,7 +136,8 @@ const mapDispatchToProps = (dispatch) => {
         closeModal: () => dispatch({type: TOGGLE_MODAL}),
         addNewCombination: (combination) =>
             dispatch(addNewCombination(combination)),
-        addProductToCombination: (id) => dispatch(addProductToCombination(id))
+        addProductToCombination: (id) => dispatch(addProductToCombination(id)),
+        removeProductFromCombination:(id) => dispatch(removeProductFromCombination(id))
     }
 }
 
