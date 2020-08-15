@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import CombinationList from './components/CombinationList/CombinationList'
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 const combinationList = document.createElement('div')
 
@@ -27,5 +29,10 @@ window.onload = function () {
     combinationList,
     toBeInsertedBefore.childNodes[3]
   )
-  ReactDOM.render(<CombinationList />, combinationList)
+  ReactDOM.render(
+    <Provider store={store}>
+      <CombinationList />
+    </Provider>,
+    combinationList
+  )
 }
