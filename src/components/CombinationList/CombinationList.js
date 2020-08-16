@@ -11,7 +11,10 @@ class CombinationList extends React.Component {
       currentImage: 0,
     }
   }
-
+  componentDidUpdate(prevState) {
+    if (prevState.wishListCombinations !== this.state.wishListCombinations) {
+    }
+  }
   componentDidMount() {
     this.makeCombinationImagesList(this.props.combinations)
     this.makeAllWishListCombinations(this.props.combinations)
@@ -42,11 +45,9 @@ class CombinationList extends React.Component {
       newObjArr.push(this.makeWishListCombination(obj))
     }
     newObjArr.forEach(function (element) {
-      // console.log(combImgselement.id.toString())
       element.imageList =
         combImgs[newObjArr.indexOf(element)][element.id.toString()]
     })
-    console.log(newObjArr, 'new OBject array')
     this.setState({ wishListCombinations: newObjArr })
   }
   makeWishListCombination = (obj) => {
@@ -60,7 +61,6 @@ class CombinationList extends React.Component {
     let reducedCost = costArr.reduce((acc, curr) => {
       return acc + curr
     })
-
     let thumbnail = obj.products[0].image[0].replace('$listing$', '$thumb$')
     let newObj = {
       name: obj.name,
@@ -71,17 +71,15 @@ class CombinationList extends React.Component {
     }
 
     for (let imgItem of this.state.wishListCombinationImages) {
-      console.log('for looppp')
       if (newObj.id === imgItem.id) {
         newObj.srcList = imgItem.srcs
       }
     }
-    console.log(newObj, 'new object')
     return newObj
   }
 
-  switchImages(id, index, arr) {
-    if (this.state.currentImage < arr[index][id].length - 1) {
+  switchImages = () => {
+    if (this.state.currentImage < 10) {
       this.setState({
         currentImage: this.state.currentImage + 1,
       })
@@ -90,11 +88,10 @@ class CombinationList extends React.Component {
         currentImage: 0,
       })
     }
-    return arr[index][id][this.state.currentImage]
+    return this.currentImage
   }
 
   render() {
-    console.log(this.state.wishListCombinationImages, 'images')
     return (
       <div className="CombinationList-Wrapper">
         {this.state.wishListCombinations.map((item) => {
@@ -105,9 +102,9 @@ class CombinationList extends React.Component {
               totalCost={item.totalCost}
               numberOfItems={item.numberOfItems}
               src={
-                this.state.wishListCombinationImages[
-                  this.state.wishListCombinations.indexOf(item)
-                ][item.id.toString()][this.state.currentImage]
+                item.imageList[this.state.currentImage]
+                  ? item.imageList[this.state.currentImage]
+                  : item.imageList[0]
               }
             />
           )
