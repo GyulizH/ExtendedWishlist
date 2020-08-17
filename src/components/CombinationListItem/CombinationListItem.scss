@@ -13,20 +13,39 @@
 
 .Combination-Info-Container{
   margin: 10px;
-  display: flex;
-  flex-direction: column;
   width: 30%;
+  flex-basis: 66%;
 }
 
 .CombinationList-Item-Info{
-
+  p{
+    padding-bottom: 10px;
+    padding-left: 5px;
+  }
 }
 
 .Combination-Actions{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  button{
-    min-width: 50px
-  }
+}
+
+.Combination-Actions-Button{
+    min-width: 50px;
+    border: 1.2px solid #00174f;
+    color: #00174f;
+    font-weight: 600;
+    padding: 2px 14px;
+    text-transform: uppercase;
+    font-size: .8em;
+    margin-bottom: 8px;
+    padding-top: 5px;
+}
+
+.CombinationList-Item-Title{
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.2rem;
+  font-size: 18px;
+  text-transform: uppercase;
 }

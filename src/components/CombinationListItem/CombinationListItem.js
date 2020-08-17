@@ -1,5 +1,6 @@
 import React from 'react'
 import './CombinationListItem.scss'
+import Button, { BTN_NO_ICON } from '../Button'
 
 const CombinationListItem = ({
   src,
@@ -18,14 +19,21 @@ const CombinationListItem = ({
       </a>
       <div className="Combination-Info-Container">
         <div className="CombinationList-Item-Info">
-          <p>{name}</p>
+          <p className="CombinationList-Item-Title">{name}</p>
           <p>Number of Items: {numberOfItems}</p>
           <p>Total Cost: {totalCost}</p>
         </div>
       </div>
       <div className="Combination-Actions">
-        <button>GO TO COMBINATION DETAILS</button>
-        <button>GO TO CHECKOUT</button>
+        <Button className="Combination-Actions-Button" variant={BTN_NO_ICON}>
+          GO TO COMBINATION DETAILS
+        </Button>
+        <Button className="Combination-Actions-Button" variant={BTN_NO_ICON}>
+          GO TO CHECKOUT
+        </Button>
+        <Button className="Combination-Actions-Button" variant={BTN_NO_ICON}>
+          DELETE COMBINATION
+        </Button>
       </div>
     </div>
   )
