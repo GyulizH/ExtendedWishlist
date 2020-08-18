@@ -1,6 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import CombinationListItem from '../CombinationListItem/CombinationListItem'
+import Button, { BTN_NO_ICON } from '../Button'
+import {
+  addNewCombination,
+  addProductToCombination,
+  removeCombination,
+  removeProductFromCombination,
+} from '../../store/Modal/combinationAction'
+import { TOGGLE_MODAL } from '../../store/Modal/action'
 
 class CombinationList extends React.Component {
   constructor(props) {
@@ -11,8 +19,13 @@ class CombinationList extends React.Component {
       currentImage: 0,
     }
   }
-  componentDidUpdate(prevState) {
-    if (prevState.wishListCombinations !== this.state.wishListCombinations) {
+  componentDidUpdate(prevProps) {
+    // if (prevState.wishListCombinations !== this.state.wishListCombinations) {
+    //   console.log("i am changed")
+    // }
+    if (prevProps.combinations !== this.props.combinations) {
+      this.makeCombinationImagesList(this.props.combinations)
+      this.makeAllWishListCombinations(this.props.combinations)
     }
   }
   componentDidMount() {
@@ -92,21 +105,46 @@ class CombinationList extends React.Component {
   }
 
   render() {
+    // console.log(this.props.combinations,"combinations")
     return (
       <div className="CombinationList-Wrapper">
         {this.state.wishListCombinations.map((item) => {
           return (
-            <CombinationListItem
-              name={item.name}
-              id={item.id}
-              totalCost={item.totalCost}
-              numberOfItems={item.numberOfItems}
-              src={
-                item.imageList[this.state.currentImage]
-                  ? item.imageList[this.state.currentImage]
-                  : item.imageList[0]
-              }
-            />
+            <div className="CombinationList-Item_Wrapper" id={item.id}>
+              <CombinationListItem
+                name={item.name}
+                id={item.id}
+                totalCost={item.totalCost}
+                numberOfItems={item.numberOfItems}
+                src={
+                  item.imageList[this.state.currentImage]
+                    ? item.imageList[this.state.currentImage]
+                    : item.imageList[0]
+                }
+              />
+              <div className="Combination-Actions">
+                <Button
+                  className="Combination-Actions-Button"
+                  variant={BTN_NO_ICON}
+                >
+                  GO TO COMBINATION DETAILS
+                </Button>
+                <Button
+                  className="Combination-Actions-Button"
+                  variant={BTN_NO_ICON}
+                >
+                  GO TO CHECKOUT
+                </Button>
+                <Button
+                  id={item.id}
+                  onClick={(e) => this.props.removeCombination(e.target.id)}
+                  className="Combination-Actions-Button"
+                  variant={BTN_NO_ICON}
+                >
+                  DELETE COMBINATION
+                </Button>
+              </div>
+            </div>
           )
         })}
       </div>
@@ -116,4 +154,10 @@ class CombinationList extends React.Component {
 const mapStateToProps = (state) => ({
   combinations: state.combinations,
 })
-export default connect(mapStateToProps, null)(CombinationList)
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeCombination: (id) => dispatch(removeCombination(id)),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CombinationList)

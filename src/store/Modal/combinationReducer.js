@@ -2,11 +2,8 @@ import {
   ADD_NEW_COMBINATION,
   ADD_PRODUCT_TO_COMBINATION,
   REMOVE_PRODUCT_FROM_COMBINATION,
+  REMOVE_COMBINATION,
 } from './combinationAction'
-
-const initialState = {
-  combinations: [],
-}
 
 export const combinationReducer = (state = [], action) => {
   if (action.type === ADD_NEW_COMBINATION) {
@@ -32,10 +29,16 @@ export const combinationReducer = (state = [], action) => {
     let combinationToBeRemoved = selectedCombination.products.findIndex(
       findProduct
     )
-    console.log(combinationToBeRemoved)
     if (combinationToBeRemoved !== -1)
       selectedCombination.products.splice(combinationToBeRemoved, 1)
     return [...state]
+  }
+
+  if (action.type === REMOVE_COMBINATION) {
+    let newState = state.filter(
+      (combination) => combination.id.toString() !== action.id
+    )
+    return [...newState]
   }
 
   return state

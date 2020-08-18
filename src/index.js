@@ -63,8 +63,9 @@ function attachCombinationButtons() {
   combinationBtnStyle.textContent = combinationStyleString
   document.body.append(combinationBtnStyle)
 
-  let elms = document.querySelector('.product-list__items').children
-  if (elms.length > 0) {
+  let elms = document.querySelector('.product-list__items')?.children
+  console.log(elms, 'elms')
+  if (elms !== undefined && elms.length > 0) {
     for (let i = 0; i < elms.length; i++) {
       if (elms[i].getElementsByClassName('buttonStyle').length === 0) {
         let btnDiv = document.createElement('div')

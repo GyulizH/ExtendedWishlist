@@ -2,12 +2,21 @@ import { store } from '../index'
 export const ADD_NEW_COMBINATION = 'ADD NEW COMBINATION'
 export const ADD_PRODUCT_TO_COMBINATION = 'ADD PRODUCT TO COMBINATION'
 export const REMOVE_PRODUCT_FROM_COMBINATION = 'REMOVE PRODUCT FROM COMBINATION'
+export const REMOVE_COMBINATION = 'REMOVE COMBINATION'
 
 //edit and delete actions will come
 export const addNewCombination = (combination) => {
   return {
     type: ADD_NEW_COMBINATION,
     combination,
+  }
+}
+
+export const removeCombination = (id) => {
+  console.log(id, 'id')
+  return {
+    type: REMOVE_COMBINATION,
+    id,
   }
 }
 
