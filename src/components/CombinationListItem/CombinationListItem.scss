@@ -1,6 +1,8 @@
 .Combination-Container{
   display: flex;
   flex-direction: row;
+  flex: 1 1 0;
+
 }
 
 .Combination-Image-Container{
@@ -10,6 +12,7 @@
 .CombinationList-Item_Wrapper{
   display: flex;
   flex-direction: row;
+  margin-bottom: 30px;
 }
 
 .Combination-a-tag{
@@ -18,14 +21,14 @@
 
 .Combination-Info-Container{
   margin: 10px;
-  width: 30%;
-  flex-basis: 66%;
+  flex: 1 1 0;
 }
 
 .CombinationList-Item-Info{
   p{
     padding-bottom: 10px;
     padding-left: 5px;
+    color:red
   }
 }
 
@@ -45,6 +48,12 @@
     font-size: .8em;
     margin-bottom: 8px;
     padding-top: 5px;
+
+  &:hover {
+    background-color:#14be82;
+    color:white;
+  }
+
 }
 
 .CombinationList-Item-Title{
@@ -53,4 +62,9 @@
   line-height: 1.2rem;
   font-size: 18px;
   text-transform: uppercase;
+  padding-bottom: 7px;
+}
+
+.CombinationListItem-Paragraph{
+  padding-bottom: 7px;
 }

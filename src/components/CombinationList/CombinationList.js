@@ -121,6 +121,7 @@ class CombinationList extends React.Component {
                     ? item.imageList[this.state.currentImage]
                     : item.imageList[0]
                 }
+                link={`https://nl.tommy.com/${item.name}`}
               />
               <div className="Combination-Actions">
                 <Button

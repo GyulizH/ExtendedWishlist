@@ -49,10 +49,10 @@ class Modal extends React.Component {
                 <form onSubmit={this.sendNewCombinationForm}>
                     <input
                         type="text"
-                        onChange={(e) => {
+                        className="Modal-Editable-Input"
+                         onChange={(e) => {
                             this.setState({combinationTitle: e.target.value})
                         }}
-                        className="Modal-Editable-Input"
                     />
                 </form>
             </Editable>
