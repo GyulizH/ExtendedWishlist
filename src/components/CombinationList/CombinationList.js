@@ -8,7 +8,8 @@ import {
   removeCombination,
   removeProductFromCombination,
 } from '../../store/Modal/combinationAction'
-import { TOGGLE_MODAL } from '../../store/Modal/action'
+import {  Link } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 class CombinationList extends React.Component {
   constructor(props) {
@@ -124,13 +125,17 @@ class CombinationList extends React.Component {
                 link={`https://nl.tommy.com/${item.name}`}
               />
               <div className="Combination-Actions">
+                <Link to={`${item.id}`} refresh="true">
                 <Button
+                    id={item.id}
                   className="Combination-Actions-Button"
                   variant={BTN_NO_ICON}
                 >
                   GO TO COMBINATION DETAILS
                 </Button>
+                </Link>
                 <Button
+                    id={item.id}
                   className="Combination-Actions-Button"
                   variant={BTN_NO_ICON}
                 >

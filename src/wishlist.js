@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import CombinationList from './components/CombinationList/CombinationList'
 import { store } from './store'
 import { Provider } from 'react-redux'
+import {HashRouter, Route } from 'react-router-dom'
+import CombinationDetails from "./components/CombinationDetails/CombinationDetails";
 
 const combinationList = document.createElement('div')
 
@@ -29,10 +31,36 @@ window.onload = function () {
     combinationList,
     toBeInsertedBefore.childNodes[3]
   )
+
   ReactDOM.render(
-    <Provider store={store}>
-      <CombinationList />
-    </Provider>,
-    combinationList
+      <div>
+        <HashRouter>
+          <Route path="/:combinationId"  exact component={CombinationDetails}>
+          </Route>
+        <Provider store={store}>
+          <CombinationList />
+        </Provider>
+        </HashRouter>
+      </div>,
+      combinationList
   )
 }
+
+// function findGoToCombinationButton(e){
+//   if(e.target.innerHTML = "GO TO COMBINATION DETAILS"){
+//     ReactDOM.render(
+//         <div>
+//          <CombinationDetails/>
+//         </div>,
+//         document.getElementById('root')
+//     )
+//   }
+// }
+//
+// window.addEventListener('click',findGoToCombinationButton)
+
+// chrome.browserAction.onClicked.addListener(function (e) {
+//     if(e.target.innerHTML === "GO TO COMBINATION DETAILS") {
+//         chrome.tabs.create({url: chrome.runtime.getURL("index.html")})
+//     };
+// });

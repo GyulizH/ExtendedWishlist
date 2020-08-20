@@ -16,6 +16,12 @@
       "run_at": "document_idle",
       "js": ["wishlist.bundle.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {},
+  "permissions":["*://*.tommy.com/*"]
 }
 
