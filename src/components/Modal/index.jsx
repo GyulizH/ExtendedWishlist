@@ -73,6 +73,7 @@ class Modal extends React.Component {
     //redux and onsubmit onchange
     //onclickling outside the input field return to the old name
     render() {
+        console.log(this.props.combinationList)
         return (
             <div>
                 <div onClick={this.closeModal} className="mask"></div>

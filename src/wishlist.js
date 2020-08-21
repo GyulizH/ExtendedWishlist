@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import CombinationList from './components/CombinationList/CombinationList'
+import CombinationDetails from './components/CombinationDetails/CombinationDetails'
 import { store } from './store'
 import { Provider } from 'react-redux'
 
@@ -36,3 +37,16 @@ window.onload = function () {
     combinationList
   )
 }
+
+function findGoToCombinationButton(e) {
+  if ((e.target.innerHTML = 'GO TO COMBINATION DETAILS')) {
+    ReactDOM.render(
+      <div>
+        <CombinationDetails />
+      </div>,
+      document.getElementById('root')
+    )
+  }
+}
+
+window.addEventListener('click', findGoToCombinationButton)
