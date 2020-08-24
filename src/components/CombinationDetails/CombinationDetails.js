@@ -6,7 +6,12 @@ class CombinationDetails extends React.Component {
   constructor(props) {
     super(props)
     this.combinationCanvasRef = React.createRef()
+    this.dragItem = React.createRef()
+    this.dragNode = React.createRef()
+    this.dragOverItem = React.createRef()
+    this.canvasRef = React.createRef()
     this.state = {
+      dragging: false,
       combination: {
         id: 1597761526335,
         name: 'new combination 1',
@@ -68,6 +73,51 @@ class CombinationDetails extends React.Component {
     context.fillStyle = 'green'
     context.fillRect(0, 0, canvas.width, canvas.height)
   }
+
+  handleDragStart = (e, product) => {
+    //e.preventDefault()
+    this.dragItem.current = product
+    this.dragNode.current = e.target
+    this.dragNode.current.addEventListener('dragend', this.onDrop)
+    this.setState({ dragging: true })
+  }
+
+  handleDragEnd = (e) => {
+    this.setState({ dragging: false })
+    this.dragNode.current.removeEventListener('dragend', this.handleDragEnd)
+    this.dragItem.current = null
+    this.dragNode.current = null
+  }
+  onDrop = (e) => {
+    //e.preventDefault()
+    const product = e.dataTransfer.getData('product')
+
+    //e.target in kordinasyonlarini alip draw canvas yapacaksin
+  }
+
+  handleDragEnter = (e) => {
+    let img = this.dragNode.current
+    let imgPositionX = e.clientX
+    let imgPositionY = e.clientY
+    // this.drawCombinationToCanvas(imgPositionX, imgPositionY,img)
+  }
+  onDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  onDrop = (e) => {
+    let img = this.dragNode.current
+    let imgPositionX = e.clientX
+    let imgPositionY = e.clientY
+    this.drawCombinationToCanvas(imgPositionX, imgPositionY, img)
+  }
+
+  drawCombinationToCanvas = (imgPositionX, imgPositionY, img) => {
+    let myCanvas = document.getElementById('combinationCanvas')
+    let context = myCanvas.getContext('2d')
+    context.drawImage(img, imgPositionX, imgPositionY, img.width, img.height)
+    console.log(img, 'canvas')
+  }
   render() {
     return (
       <div className="Combination-Details-Container">
@@ -84,8 +134,16 @@ class CombinationDetails extends React.Component {
             {this.state.combination.products.map((product) => {
               return (
                 <div className="Combination-Details__List-Item" id={product.id}>
-                  <div>
-                    <img src={product.image[0]} />
+                  <div
+                    draggable
+                    onDragStart={(e) => {
+                      this.handleDragStart(e, product)
+                    }}
+                    onDragEnter={(e) => {
+                      this.handleDragEnter(e)
+                    }}
+                  >
+                    <img src={product.image[0]} id={product.id} />
                   </div>
                   {product.name}
                 </div>
@@ -95,6 +153,15 @@ class CombinationDetails extends React.Component {
         </div>
         <div className="Combination-Details__Canvas-Wrapper">
           <canvas
+            ref={this.canvasRef}
+            id="combinationCanvas"
+            onDragOver={this.onDragOver}
+            onDragEnter={(e) => {
+              this.handleDragEnter(e)
+            }}
+            onDrop={(e) => {
+              this.onDrop(e)
+            }}
             ref={this.combinationCanvasRef}
             width="300px"
             height="600px"

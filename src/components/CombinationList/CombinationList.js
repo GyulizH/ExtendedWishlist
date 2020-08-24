@@ -105,7 +105,6 @@ class CombinationList extends React.Component {
   }
 
   render() {
-    console.log(this.props.combinations, 'combinations')
     return (
       <div className="CombinationList-Wrapper">
         {this.state.wishListCombinations.map((item) => {
