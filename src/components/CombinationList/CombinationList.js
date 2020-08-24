@@ -72,9 +72,12 @@ class CombinationList extends React.Component {
       )
       costArr.push(onlyThePrice)
     }
-    let reducedCost = costArr.reduce((acc, curr) => {
-      return acc + curr
-    })
+    let reducedCost =
+      costArr.length > 0
+        ? costArr.reduce((acc, curr) => {
+            return acc + curr
+          })
+        : 0
     let thumbnail = obj.products[0].image[0].replace('$listing$', '$thumb$')
     let newObj = {
       name: obj.name,
@@ -106,7 +109,6 @@ class CombinationList extends React.Component {
   }
 
   render() {
-    // console.log(this.props.combinations,"combinations")
     return (
       <div className="CombinationList-Wrapper">
         {this.state.wishListCombinations.map((item) => {
