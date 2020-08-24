@@ -39,7 +39,7 @@ window.onload = function () {
 }
 
 function findGoToCombinationButton(e) {
-  if ((e.target.innerHTML = 'GO TO COMBINATION DETAILS')) {
+  if (e.target.innerHTML === 'GO TO COMBINATION DETAILS') {
     ReactDOM.render(
       <div>
         <CombinationDetails />

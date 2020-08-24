@@ -91,17 +91,17 @@ class CombinationDetails extends React.Component {
 
   handleDragEnter = (e) => {
     e.preventDefault()
-    let img = this.dragNode.current
-    let imgPositionX = e.clientX
-    let imgPositionY = e.clientY
-    // this.drawCombinationToCanvas(imgPositionX, imgPositionY,img)
+    // let img = this.dragNode.current
+    // let imgPositionX = e.clientX
+    // let imgPositionY = e.clientY
+    // // this.drawCombinationToCanvas(imgPositionX, imgPositionY,img)
   }
   onDragOver = (e) => {
     e.preventDefault()
   }
 
   onDrop = (e) => {
-   // console.log(this.dragNode.current,"current nodee")
+    // console.log(this.dragNode.current,"current nodee")
     let img = this.dragNode.current
     let imgPositionX = e.clientX
     let imgPositionY = e.clientY
@@ -110,9 +110,10 @@ class CombinationDetails extends React.Component {
   }
 
   drawCombinationToCanvas = (imgPositionX, imgPositionY, img) => {
-    console.log(img.width,img.height, "imageee")
+    console.log(imgPositionX, imgPositionY, 'imageee')
     let myCanvas = document.getElementById('combinationCanvas')
     let context = myCanvas.getContext('2d')
+    console.log(context)
     context.drawImage(img, imgPositionX, imgPositionY, img.width, img.height)
     console.log(img, 'canvas')
   }
