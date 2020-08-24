@@ -78,7 +78,7 @@ class CombinationDetails extends React.Component {
     //e.preventDefault()
     this.dragItem.current = product
     this.dragNode.current = e.target
-    this.dragNode.current.addEventListener('dragend', this.onDrop)
+    this.dragNode.current.addEventListener('dragend', this.handleDragEnter)
     this.setState({ dragging: true })
   }
 
@@ -88,14 +88,9 @@ class CombinationDetails extends React.Component {
     this.dragItem.current = null
     this.dragNode.current = null
   }
-  onDrop = (e) => {
-    //e.preventDefault()
-    const product = e.dataTransfer.getData('product')
-
-    //e.target in kordinasyonlarini alip draw canvas yapacaksin
-  }
 
   handleDragEnter = (e) => {
+    e.preventDefault()
     let img = this.dragNode.current
     let imgPositionX = e.clientX
     let imgPositionY = e.clientY
@@ -106,13 +101,16 @@ class CombinationDetails extends React.Component {
   }
 
   onDrop = (e) => {
+   // console.log(this.dragNode.current,"current nodee")
     let img = this.dragNode.current
     let imgPositionX = e.clientX
     let imgPositionY = e.clientY
+    //console.log(imgPositionY,imgPositionX, "positions")
     this.drawCombinationToCanvas(imgPositionX, imgPositionY, img)
   }
 
   drawCombinationToCanvas = (imgPositionX, imgPositionY, img) => {
+    console.log(img.width,img.height, "imageee")
     let myCanvas = document.getElementById('combinationCanvas')
     let context = myCanvas.getContext('2d')
     context.drawImage(img, imgPositionX, imgPositionY, img.width, img.height)
