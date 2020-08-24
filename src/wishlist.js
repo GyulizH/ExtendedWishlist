@@ -33,15 +33,14 @@ window.onload = function () {
   )
 
   ReactDOM.render(
-      <div>
+      <Provider store={store}>
         <HashRouter>
           <Route path="/:combinationId"  exact component={CombinationDetails}>
           </Route>
-        <Provider store={store}>
-          <CombinationList />
-        </Provider>
+            <Route path="/" exact component={CombinationList} >
+            </Route>
         </HashRouter>
-      </div>,
+      </Provider>,
       combinationList
   )
 }
