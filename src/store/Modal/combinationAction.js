@@ -3,6 +3,8 @@ export const ADD_NEW_COMBINATION = 'ADD NEW COMBINATION'
 export const ADD_PRODUCT_TO_COMBINATION = 'ADD PRODUCT TO COMBINATION'
 export const REMOVE_PRODUCT_FROM_COMBINATION = 'REMOVE PRODUCT FROM COMBINATION'
 export const REMOVE_COMBINATION = 'REMOVE COMBINATION'
+export const REMOVE_PRODUCT_FROM_COMBINATION_DETAILS =
+  'REMOVE PRODUCT FROM COMBINATION DETAILS'
 
 //edit and delete actions will come
 export const addNewCombination = (combination) => {
@@ -33,5 +35,17 @@ export const removeProductFromCombination = (id) => {
     type: REMOVE_PRODUCT_FROM_COMBINATION,
     product,
     id,
+  }
+}
+
+export const removeProductFromCombinationDetails = (
+  combinationID,
+  productID
+) => {
+  console.log(combinationID, productID, 'actionnn')
+  return {
+    type: REMOVE_PRODUCT_FROM_COMBINATION_DETAILS,
+    combinationID,
+    productID,
   }
 }

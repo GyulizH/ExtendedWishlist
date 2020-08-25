@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   flex: 0 0 70%;
-  margin-top: 28px;
+  margin-top: 24px;
 }
 
 .Combination-Details__Canvas-Button{
@@ -39,17 +39,22 @@
 
 .Combination-Details__List-Item{
   display: flex;
+  position: relative;
   span{
     font-size: 13px;
     padding-top: 3px;
+    width: 50%
   }
 }
 
+.Combination-Details__List-Item-Button{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
 .Combination-Details__Item-List-Header{
   font-size: 20px;
   font-weight: 600;
   padding: 10px;
-  span{
-
-  }
 }

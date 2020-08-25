@@ -10,7 +10,6 @@ const combinationList = document.createElement('div')
 
 window.onload = function () {
   combinationList.className = 'wishlist--combinationlist-wrapper'
-  combinationList.innerHTML = 'hey there how are you'
   let nodes = document.querySelectorAll('.wishlist__listing > *')
   let arr = Array.from(nodes)
   // document.body.getElementsByClassName("wishlist__listing")[0].innerHTML = " "

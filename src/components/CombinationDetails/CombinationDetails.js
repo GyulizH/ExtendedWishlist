@@ -2,10 +2,13 @@ import React from 'react'
 import { connect, Provider } from 'react-redux'
 
 import './CombinationDetails.scss'
-import Button, { BTN_NO_ICON } from '../Button'
-import ReactDOM from 'react-dom'
-import { store } from '../../store'
-import Extension from '../Extension'
+import Button, { BTN_NO_ICON, BTN_WITH_CROSS_ICON } from '../Button'
+import {
+  addNewCombination,
+  addProductToCombination,
+  removeProductFromCombinationDetails,
+} from '../../store/Modal/combinationAction'
+import { TOGGLE_MODAL } from '../../store/Modal/action'
 
 class CombinationDetails extends React.Component {
   constructor(props) {
@@ -18,82 +21,38 @@ class CombinationDetails extends React.Component {
     this.state = {
       dragging: false,
       currentCombination: {},
-      combination: {
-        id: 1597761526335,
-        name: 'new combination 1',
-        products: [
-          {
-            name: 'ESSENTIAL FLEECE HOODIE MET LOGO',
-            price: '€ 99,90',
-            image: [
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_main_listing?$thumb$',
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_hover?$thumb@2x$',
-            ],
-            id: -1665714636,
-          },
-          {
-            name: 'ESSENTIAL FLEECE HOODIE MET LOGO',
-            price: '€ 99,90',
-            image: [
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_main_listing?$thumb$',
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_hover?$thumb@2x$',
-            ],
-            id: -1665714636,
-          },
-          {
-            name: 'ESSENTIAL FLEECE HOODIE MET LOGO',
-            price: '€ 99,90',
-            image: [
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_main_listing?$thumb$',
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_hover?$thumb@2x$',
-            ],
-            id: -1665714636,
-          },
-          {
-            name: 'ESSENTIAL FLEECE HOODIE MET LOGO',
-            price: '€ 99,90',
-            image: [
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_main_listing?$thumb$',
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_hover?$thumb@2x$',
-            ],
-            id: -1665714636,
-          },
-          {
-            name: 'ESSENTIAL FLEECE HOODIE MET LOGO',
-            price: '€ 99,90',
-            image: [
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_main_listing?$thumb$',
-              'https://tommy-europe.scene7.com/is/image/TommyEurope/WW0WW26410_YBR_hover?$thumb@2x$',
-            ],
-            id: -1665714636,
-          },
-        ],
-      },
     }
   }
 
   //put canvas in a different component, maybe draw canvas elsewhere
   componentDidMount() {
-    const combinationId = this.props.match.params.combinationId
-    let currentCombination = this.props.combinations.find(
-      ({ id }) => id.toString() === combinationId
-    )
-    this.setState({
-      currentCombination: this.convertProductPictures(currentCombination),
-    })
-    this.clearWishlist()
-    document.getElementsByClassName('wishlist__listing--title')[0].innerText =
-      currentCombination.name
+    // const combinationId = this.props.match.params.combinationId
+    // let currentCombination = this.props.combinations.find(
+    //   ({ id }) => id.toString() === combinationId
+    // )
+    this.convertProductPictures(this.props.currentCombination),
+      this.clearWishList()
+    let btn = document.createElement('button')
+    btn.innerHTML = 'BACK'
+    document.getElementsByClassName('wishlist__listing')[0].prepend(btn)
+    document.getElementsByClassName(
+      'wishlist__listing--title'
+    )[0].innerText = this.props.currentCombination.name
     this.drawCanvas()
   }
 
+  componentDidUpdate(prevProps) {
+    // console.log(this.props.currentCombination,prevProps.currentCombination)
+    if (this.props.currentCombination !== prevProps.currentCombination) {
+      console.log('component did update')
+      this.convertProductPictures(this.props.combinations)
+    }
+  }
   // trying to clean the wishlist elements not working
-  clearWishlist = () => {
+  clearWishList = () => {
     let wishlistItems = document.getElementsByClassName('wishlist-item')
     for (let item of wishlistItems) {
-      console.log(item, 'item')
       item.innerHTML = ' '
-      console.log(item)
     }
   }
   drawCanvas = () => {
@@ -106,11 +65,14 @@ class CombinationDetails extends React.Component {
     for (let product of combination.products) {
       product.image.forEach((img) => {
         let index = product.image.indexOf(img)
-        let newImgUrl = img.replace('$listing$', '$thumb$')
-        product.image[index] = newImgUrl
+        if (img.includes('$listing$')) {
+          let newImgUrl = img.replace('$listing$', '$thumb$')
+          product.image[index] = newImgUrl
+        }
       })
     }
-    return { ...combination }
+    this.setState({ currentCombination: { ...combination } })
+    //return { ...combination }
   }
 
   handleDragStart = (e, product) => {
@@ -147,7 +109,13 @@ class CombinationDetails extends React.Component {
     let context = myCanvas.getContext('2d')
     context.drawImage(img, imgPositionX, imgPositionY, img.width, img.height)
   }
+
+  removeProductFromCombination = (combinationId, productId) => {
+    console.log(combinationId, productId, 'combinationdetails')
+    this.props.removeProduct(combinationId, productId)
+  }
   render() {
+    console.log(this.state.currentCombination, 'state')
     return (
       <div className="Combination-Details-Container">
         <div className="Combination-Details__Item-List-Wrapper">
@@ -173,6 +141,16 @@ class CombinationDetails extends React.Component {
                     <img src={product.image[0]} id={product.id} />
                   </div>
                   <span>{product.name}</span>
+                  <Button
+                    className="Combination-Details__List-Item-Button"
+                    onClick={() =>
+                      this.removeProductFromCombination(
+                        this.state.currentCombination.id,
+                        product.id
+                      )
+                    }
+                    variant={BTN_WITH_CROSS_ICON}
+                  ></Button>
                 </div>
               )
             })}
@@ -205,8 +183,17 @@ class CombinationDetails extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  combinations: state.combinations,
+const mapStateToProps = (state, ownProps) => ({
+  currentCombination: state.combinations.find(
+    ({ id }) => id.toString() === ownProps.match.params.combinationId
+  ),
 })
 
-export default connect(mapStateToProps, null)(CombinationDetails)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeProduct: (combinationID, productID) =>
+      dispatch(removeProductFromCombinationDetails(combinationID, productID)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CombinationDetails)

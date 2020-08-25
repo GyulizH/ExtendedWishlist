@@ -80,7 +80,7 @@ class CombinationList extends React.Component {
             return acc + curr
           })
         : 0
-    let thumbnail = obj.products[0].image[0].replace('$listing$', '$thumb$')
+    let thumbnail = obj?.products[0]?.image[0].replace('$listing$', '$thumb$')
     let newObj = {
       name: obj.name,
       id: obj.id,
@@ -123,8 +123,8 @@ class CombinationList extends React.Component {
                 numberOfItems={item.numberOfItems}
                 src={
                   item.imageList[this.state.currentImage]
-                    ? item.imageList[this.state.currentImage]
-                    : item.imageList[0]
+                    ? item?.imageList[this.state.currentImage]
+                    : item?.imageList[0]
                 }
                 link={`https://nl.tommy.com/${item.name}`}
               />
