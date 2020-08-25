@@ -13,7 +13,6 @@ export const addNewCombination = (combination) => {
 }
 
 export const removeCombination = (id) => {
-  console.log(id, 'id')
   return {
     type: REMOVE_COMBINATION,
     id,

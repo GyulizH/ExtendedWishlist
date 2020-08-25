@@ -64,7 +64,6 @@ function attachCombinationButtons() {
   document.body.append(combinationBtnStyle)
 
   let elms = document.querySelector('.product-list__items')?.children
-  console.log(elms, 'elms')
   if (elms !== undefined && elms.length > 0) {
     for (let i = 0; i < elms.length; i++) {
       if (elms[i].getElementsByClassName('buttonStyle').length === 0) {

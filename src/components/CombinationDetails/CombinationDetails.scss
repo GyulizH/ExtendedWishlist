@@ -39,10 +39,17 @@
 
 .Combination-Details__List-Item{
   display: flex;
+  span{
+    font-size: 13px;
+    padding-top: 3px;
+  }
 }
 
 .Combination-Details__Item-List-Header{
   font-size: 20px;
   font-weight: 600;
   padding: 10px;
+  span{
+
+  }
 }

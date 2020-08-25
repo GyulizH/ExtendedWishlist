@@ -1,7 +1,11 @@
 import React from 'react'
+import { connect, Provider } from 'react-redux'
 
 import './CombinationDetails.scss'
 import Button, { BTN_NO_ICON } from '../Button'
+import ReactDOM from 'react-dom'
+import { store } from '../../store'
+import Extension from '../Extension'
 
 class CombinationDetails extends React.Component {
   constructor(props) {
@@ -13,6 +17,7 @@ class CombinationDetails extends React.Component {
     this.canvasRef = React.createRef()
     this.state = {
       dragging: false,
+      currentCombination: {},
       combination: {
         id: 1597761526335,
         name: 'new combination 1',
@@ -67,16 +72,48 @@ class CombinationDetails extends React.Component {
     }
   }
 
-  //put canvas in a different component
+  //put canvas in a different component, maybe draw canvas elsewhere
   componentDidMount() {
+    const combinationId = this.props.match.params.combinationId
+    let currentCombination = this.props.combinations.find(
+      ({ id }) => id.toString() === combinationId
+    )
+    this.setState({
+      currentCombination: this.convertProductPictures(currentCombination),
+    })
+    this.clearWishlist()
+    document.getElementsByClassName('wishlist__listing--title')[0].innerText =
+      currentCombination.name
+    this.drawCanvas()
+  }
+
+  // trying to clean the wishlist elements not working
+  clearWishlist = () => {
+    let wishlistItems = document.getElementsByClassName('wishlist-item')
+    for (let item of wishlistItems) {
+      console.log(item, 'item')
+      item.innerHTML = ' '
+      console.log(item)
+    }
+  }
+  drawCanvas = () => {
     const canvas = this.combinationCanvasRef.current
     let context = canvas.getContext('2d')
     context.fillStyle = 'green'
     context.fillRect(0, 0, canvas.width, canvas.height)
   }
+  convertProductPictures = (combination) => {
+    for (let product of combination.products) {
+      product.image.forEach((img) => {
+        let index = product.image.indexOf(img)
+        let newImgUrl = img.replace('$listing$', '$thumb$')
+        product.image[index] = newImgUrl
+      })
+    }
+    return { ...combination }
+  }
 
   handleDragStart = (e, product) => {
-    //e.preventDefault()
     this.dragItem.current = product
     this.dragNode.current = e.target
     this.dragNode.current.addEventListener('dragend', this.handleDragEnter)
@@ -92,46 +129,36 @@ class CombinationDetails extends React.Component {
 
   handleDragEnter = (e) => {
     e.preventDefault()
-    // let img = this.dragNode.current
-    // let imgPositionX = e.clientX
-    // let imgPositionY = e.clientY
-    // // this.drawCombinationToCanvas(imgPositionX, imgPositionY,img)
   }
   onDragOver = (e) => {
     e.preventDefault()
   }
 
   onDrop = (e) => {
-    // console.log(this.dragNode.current,"current nodee")
     let img = this.dragNode.current
     let imgPositionX = e.clientX
     let imgPositionY = e.clientY
-    //console.log(imgPositionY,imgPositionX, "positions")
+    //Pozisyonu dogru hesapla ve gonder
     this.drawCombinationToCanvas(imgPositionX, imgPositionY, img)
   }
 
   drawCombinationToCanvas = (imgPositionX, imgPositionY, img) => {
-    console.log(imgPositionX, imgPositionY, 'imageee')
     let myCanvas = document.getElementById('combinationCanvas')
     let context = myCanvas.getContext('2d')
-    console.log(context)
     context.drawImage(img, imgPositionX, imgPositionY, img.width, img.height)
-    console.log(img, 'canvas')
   }
   render() {
     return (
       <div className="Combination-Details-Container">
         <div className="Combination-Details__Item-List-Wrapper">
-          <div className="Combination-Details__Item-List-Header">
-            {this.state.combination.name}
-          </div>
+          <div className="Combination-Details__Item-List-Header"></div>
           <div
             className={
               'Combination-Details__Item-List-Container' +
-              (this.state.combination.products.length > 4 ? '-Scroll' : null)
+              (this.state.currentCombination > 4 ? '-Scroll' : null)
             }
           >
-            {this.state.combination.products.map((product) => {
+            {this.state.currentCombination?.products?.map((product) => {
               return (
                 <div className="Combination-Details__List-Item" id={product.id}>
                   <div
@@ -145,7 +172,7 @@ class CombinationDetails extends React.Component {
                   >
                     <img src={product.image[0]} id={product.id} />
                   </div>
-                  {product.name}
+                  <span>{product.name}</span>
                 </div>
               )
             })}
@@ -178,4 +205,8 @@ class CombinationDetails extends React.Component {
   }
 }
 
-export default CombinationDetails
+const mapStateToProps = (state) => ({
+  combinations: state.combinations,
+})
+
+export default connect(mapStateToProps, null)(CombinationDetails)

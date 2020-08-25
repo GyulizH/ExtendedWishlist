@@ -8,7 +8,7 @@ import {
   removeCombination,
   removeProductFromCombination,
 } from '../../store/Modal/combinationAction'
-import {  Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 class CombinationList extends React.Component {
@@ -20,6 +20,7 @@ class CombinationList extends React.Component {
       currentImage: 0,
     }
   }
+
   componentDidUpdate(prevProps) {
     // if (prevState.wishListCombinations !== this.state.wishListCombinations) {
     //   console.log("i am changed")
@@ -29,6 +30,7 @@ class CombinationList extends React.Component {
       this.makeAllWishListCombinations(this.props.combinations)
     }
   }
+
   componentDidMount() {
     this.makeCombinationImagesList(this.props.combinations)
     this.makeAllWishListCombinations(this.props.combinations)
@@ -128,16 +130,16 @@ class CombinationList extends React.Component {
               />
               <div className="Combination-Actions">
                 <Link to={`${item.id}`} refresh="true">
-                <Button
+                  <Button
                     id={item.id}
-                  className="Combination-Actions-Button"
-                  variant={BTN_NO_ICON}
-                >
-                  GO TO COMBINATION DETAILS
-                </Button>
+                    className="Combination-Actions-Button"
+                    variant={BTN_NO_ICON}
+                  >
+                    GO TO COMBINATION DETAILS
+                  </Button>
                 </Link>
                 <Button
-                    id={item.id}
+                  id={item.id}
                   className="Combination-Actions-Button"
                   variant={BTN_NO_ICON}
                 >
@@ -159,6 +161,7 @@ class CombinationList extends React.Component {
     )
   }
 }
+
 const mapStateToProps = (state) => ({
   combinations: state.combinations,
 })

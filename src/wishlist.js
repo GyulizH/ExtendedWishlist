@@ -4,8 +4,7 @@ import CombinationList from './components/CombinationList/CombinationList'
 import CombinationDetails from './components/CombinationDetails/CombinationDetails'
 import { store } from './store'
 import { Provider } from 'react-redux'
-import {HashRouter, Route } from 'react-router-dom'
-import CombinationDetails from "./components/CombinationDetails/CombinationDetails";
+import { HashRouter, Route } from 'react-router-dom'
 
 const combinationList = document.createElement('div')
 
@@ -34,28 +33,29 @@ window.onload = function () {
   )
 
   ReactDOM.render(
-      <Provider store={store}>
-        <HashRouter>
-          <Route path="/:combinationId"  exact component={CombinationDetails}>
-          </Route>
-            <Route path="/" exact component={CombinationList} >
-            </Route>
-        </HashRouter>
-      </Provider>,
-      combinationList
+    <Provider store={store}>
+      <HashRouter>
+        <Route path="/" exact component={CombinationList}></Route>
+        <Route
+          path="/:combinationId"
+          exact
+          component={CombinationDetails}
+        ></Route>
+      </HashRouter>
+    </Provider>,
+    combinationList
   )
 }
 
-function findGoToCombinationButton(e) {
-  if (e.target.innerHTML === 'GO TO COMBINATION DETAILS') {
-    ReactDOM.render(
-      <div>
-        <CombinationDetails />
-      </div>,
-      document.getElementById('root')
-    )
-  }
-}
+// function findGoToCombinationButton(e) {
+//   if (e.target.innerHTML === 'GO TO COMBINATION DETAILS') {
+//     ReactDOM.render(
+//       <div>
+//         <CombinationDetails />
+//       </div>,
+//       document.getElementById('root')
+//     )
+//   }
+// }
 
-window.addEventListener('click', findGoToCombinationButton)
-
+// window.addEventListener('click', findGoToCombinationButton)
