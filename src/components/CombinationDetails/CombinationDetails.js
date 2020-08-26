@@ -3,12 +3,9 @@ import { connect, Provider } from 'react-redux'
 
 import './CombinationDetails.scss'
 import Button, { BTN_NO_ICON, BTN_WITH_CROSS_ICON } from '../Button'
-import {
-  addNewCombination,
-  addProductToCombination,
-  removeProductFromCombinationDetails,
-} from '../../store/Modal/combinationAction'
-import { TOGGLE_MODAL } from '../../store/Modal/action'
+import { removeProductFromCombinationDetails } from '../../store/Modal/combinationAction'
+
+import { addProductToCanvas } from '../../store/Modal/canvasAction'
 
 class CombinationDetails extends React.Component {
   constructor(props) {
@@ -26,10 +23,6 @@ class CombinationDetails extends React.Component {
 
   //put canvas in a different component, maybe draw canvas elsewhere
   componentDidMount() {
-    // const combinationId = this.props.match.params.combinationId
-    // let currentCombination = this.props.combinations.find(
-    //   ({ id }) => id.toString() === combinationId
-    // )
     this.convertProductPictures(this.props.currentCombination),
       this.clearWishList()
     let btn = document.createElement('button')
@@ -39,12 +32,16 @@ class CombinationDetails extends React.Component {
       'wishlist__listing--title'
     )[0].innerText = this.props.currentCombination.name
     this.drawCanvas()
+    //this.drawItemsOnCanvas()
   }
 
   componentDidUpdate(prevProps) {
-    // console.log(this.props.currentCombination,prevProps.currentCombination)
+    if (this.props.canvasItems !== prevProps.canvasItems) {
+      console.log(this.props.canvasItems, 'componentdidMount')
+      //this.drawItemsOnCanvas()
+    }
     if (this.props.currentCombination !== prevProps.currentCombination) {
-      console.log('component did update')
+      //console.log('component did update')
       this.convertProductPictures(this.props.combinations)
     }
   }
@@ -55,12 +52,37 @@ class CombinationDetails extends React.Component {
       item.innerHTML = ' '
     }
   }
+
   drawCanvas = () => {
     const canvas = this.combinationCanvasRef.current
+    let combinationDetailsListWrapperX = document
+      .getElementsByClassName('Combination-Details__Item-List-Wrapper')[0]
+      .getBoundingClientRect().width
+    let wishListWrapperX = document
+      .getElementsByClassName('wishlist__listing')[0]
+      .getBoundingClientRect().width
     let context = canvas.getContext('2d')
+    context.canvas.width = wishListWrapperX - combinationDetailsListWrapperX
+    context.canvas.height = 600 - 27.375 - 20
     context.fillStyle = 'green'
-    context.fillRect(0, 0, canvas.width, canvas.height)
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height)
   }
+
+  drawItemsOnCanvas = () => {
+    console.log(this.props.canvasItems, 'draw canvas items')
+    for (let item of this.props.canvasItems) {
+      let myCanvas = document.getElementById('combinationCanvas')
+      let context = myCanvas.getContext('2d')
+      context.drawImage(
+        item.image.img,
+        item.image.positionX,
+        item.image.positionY,
+        item.image.width,
+        item.image.height
+      )
+    }
+  }
+
   convertProductPictures = (combination) => {
     for (let product of combination.products) {
       product.image.forEach((img) => {
@@ -100,8 +122,26 @@ class CombinationDetails extends React.Component {
     let img = this.dragNode.current
     let imgPositionX = e.clientX
     let imgPositionY = e.clientY
-    //Pozisyonu dogru hesapla ve gonder
-    this.drawCombinationToCanvas(imgPositionX, imgPositionY, img)
+    const canvas = this.combinationCanvasRef.current
+    let canvasPositionX = canvas.getBoundingClientRect().left
+    let canvasPositionY = canvas.getBoundingClientRect().top
+    let x = imgPositionX - canvasPositionX
+    let y = imgPositionY - canvasPositionY
+
+    let canvasImg = {
+      width: 96,
+      height: 138,
+      positionX: x,
+      positionY: y,
+      img: this.dragNode.current,
+    }
+    let canvasItem = {
+      image: canvasImg,
+      product: this.dragItem.current,
+    }
+
+    this.drawCombinationToCanvas(x, y, img)
+    this.props.addProductToCanvas(canvasItem, this.props.currentCombination.id)
   }
 
   drawCombinationToCanvas = (imgPositionX, imgPositionY, img) => {
@@ -110,12 +150,15 @@ class CombinationDetails extends React.Component {
     context.drawImage(img, imgPositionX, imgPositionY, img.width, img.height)
   }
 
+  handleMouseDown = (e) => {
+    console.log('hey')
+  }
   removeProductFromCombination = (combinationId, productId) => {
     console.log(combinationId, productId, 'combinationdetails')
     this.props.removeProduct(combinationId, productId)
   }
   render() {
-    console.log(this.state.currentCombination, 'state')
+    // console.log(this.state.currentCombination, 'state')
     return (
       <div className="Combination-Details-Container">
         <div className="Combination-Details__Item-List-Wrapper">
@@ -123,7 +166,9 @@ class CombinationDetails extends React.Component {
           <div
             className={
               'Combination-Details__Item-List-Container' +
-              (this.state.currentCombination > 4 ? '-Scroll' : null)
+              (this.state.currentCombination?.products?.length > 4
+                ? '-Scroll'
+                : null)
             }
           >
             {this.state.currentCombination?.products?.map((product) => {
@@ -168,8 +213,7 @@ class CombinationDetails extends React.Component {
               this.onDrop(e)
             }}
             ref={this.combinationCanvasRef}
-            width="300px"
-            height="600px"
+            onMouseDown={this.handleMouseDown}
           ></canvas>
           <Button
             className="Combination-Details__Canvas-Button"
@@ -187,6 +231,7 @@ const mapStateToProps = (state, ownProps) => ({
   currentCombination: state.combinations.find(
     ({ id }) => id.toString() === ownProps.match.params.combinationId
   ),
+  canvasItems: state.canvasItems,
 })
 
 const mapDispatchToProps = (dispatch) => {

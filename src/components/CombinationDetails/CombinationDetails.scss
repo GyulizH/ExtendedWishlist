@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: row;
 }
-
+.Combination-Details__Item-List-Container{
+  height: 600px;
+}
 .Combination-Details__Item-List-Container-Scroll{
   overflow-y: scroll;
   height: 600px;
@@ -15,19 +17,19 @@
   display: flex;
   flex-direction: column;
   flex: 0 0 70%;
-  margin-top: 24px;
+  margin-top: 22px;
 }
 
 .Combination-Details__Canvas-Button{
   min-width: 300px;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-left: 10px;
   border: 1.2px solid #00174f;
   color: #00174f;
   font-weight: 600;
   padding: 2px 14px;
   text-transform: uppercase;
   font-size: .8em;
-  margin-bottom: 8px;
   padding-top: 5px;
   align-self: flex-end;
 

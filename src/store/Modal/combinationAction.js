@@ -7,6 +7,7 @@ export const REMOVE_PRODUCT_FROM_COMBINATION_DETAILS =
   'REMOVE PRODUCT FROM COMBINATION DETAILS'
 
 //edit and delete actions will come
+
 export const addNewCombination = (combination) => {
   return {
     type: ADD_NEW_COMBINATION,
@@ -42,7 +43,6 @@ export const removeProductFromCombinationDetails = (
   combinationID,
   productID
 ) => {
-  console.log(combinationID, productID, 'actionnn')
   return {
     type: REMOVE_PRODUCT_FROM_COMBINATION_DETAILS,
     combinationID,

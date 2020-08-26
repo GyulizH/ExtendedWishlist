@@ -10,6 +10,7 @@ import {
 } from '../../store/Modal/combinationAction'
 import { Link } from 'react-router-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
+import { addNewCombinationToCanvas } from '../../store/Modal/canvasAction'
 
 class CombinationList extends React.Component {
   constructor(props) {
@@ -22,9 +23,6 @@ class CombinationList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if (prevState.wishListCombinations !== this.state.wishListCombinations) {
-    //   console.log("i am changed")
-    // }
     if (prevProps.combinations !== this.props.combinations) {
       this.makeCombinationImagesList(this.props.combinations)
       this.makeAllWishListCombinations(this.props.combinations)
@@ -110,6 +108,14 @@ class CombinationList extends React.Component {
     return this.currentImage
   }
 
+  addNewCombinationToCanvas = (id) => {
+    let canvasCombination = {
+      id: id,
+      products: [],
+    }
+    this.props.addNewCombinationToCanvas(canvasCombination)
+  }
+
   render() {
     return (
       <div className="CombinationList-Wrapper">
@@ -134,6 +140,7 @@ class CombinationList extends React.Component {
                     id={item.id}
                     className="Combination-Actions-Button"
                     variant={BTN_NO_ICON}
+                    onClick={() => this.addNewCombinationToCanvas(item.id)}
                   >
                     GO TO COMBINATION DETAILS
                   </Button>
@@ -169,6 +176,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     removeCombination: (id) => dispatch(removeCombination(id)),
+    addNewCombinationToCanvas: (combinationID) =>
+      dispatch(addNewCombinationToCanvas(combinationID)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CombinationList)

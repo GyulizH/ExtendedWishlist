@@ -15,6 +15,7 @@ export const store = createStore(
 store.subscribe(() => {
   saveState({
     combinations: store.getState().combinations,
+    canvasItems: store.getState().canvasItems,
   })
 })
 
