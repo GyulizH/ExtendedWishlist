@@ -1,0 +1,60 @@
+.Combination-Details-Container{
+  display: flex;
+  flex-direction: row;
+}
+
+.Combination-Details__Item-List-Container-Scroll{
+  overflow-y: scroll;
+  height: 600px;
+}
+.Combination-Details__Item-List-Wrapper{
+  flex: 0 0 30%;
+}
+
+.Combination-Details__Canvas-Wrapper{
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 70%;
+  margin-top: 24px;
+}
+
+.Combination-Details__Canvas-Button{
+  min-width: 300px;
+  margin-top: 10px;
+  border: 1.2px solid #00174f;
+  color: #00174f;
+  font-weight: 600;
+  padding: 2px 14px;
+  text-transform: uppercase;
+  font-size: .8em;
+  margin-bottom: 8px;
+  padding-top: 5px;
+  align-self: flex-end;
+
+  &:hover {
+    background-color:#14be82;
+    color:white;
+  }
+}
+
+.Combination-Details__List-Item{
+  display: flex;
+  position: relative;
+  span{
+    font-size: 13px;
+    padding-top: 3px;
+    width: 50%
+  }
+}
+
+.Combination-Details__List-Item-Button{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+.Combination-Details__Item-List-Header{
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px;
+}
