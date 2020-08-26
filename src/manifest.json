@@ -4,24 +4,12 @@
   "permissions": ["storage", "activeTab"],
   "description": "Changes the wishlist",
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
-      "matches": ["*://*.tommy.com/*"],
+      "matches": ["*://*.tommy.com/dames-kleding/*"],
       "run_at": "document_idle",
-      "js": ["modal.bundle.js"]
-    },
-    {
-      "matches": ["*://*.tommy.com/wishlist*"],
-      "run_at": "document_idle",
-      "js": ["wishlist.bundle.js"]
+      "js": ["bundle.js"]
     }
-  ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
-  "browser_action": {},
-  "permissions":["*://*.tommy.com/*"]
+  ]
 }
 
