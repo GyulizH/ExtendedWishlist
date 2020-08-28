@@ -5,7 +5,10 @@ import './CombinationDetails.scss'
 import Button, { BTN_NO_ICON, BTN_WITH_CROSS_ICON } from '../Button'
 import { removeProductFromCombinationDetails } from '../../store/Modal/combinationAction'
 
-import { addProductToCanvas } from '../../store/Modal/canvasAction'
+import {
+  addProductToCanvas,
+  deleteProductFromCanvas,
+} from '../../store/Modal/canvasAction'
 
 class CombinationDetails extends React.Component {
   constructor(props) {
@@ -23,6 +26,7 @@ class CombinationDetails extends React.Component {
 
   //put canvas in a different component, maybe draw canvas elsewhere
   componentDidMount() {
+    console.log(this.props.canvasItems, 'component did mount')
     this.convertProductPictures(this.props.currentCombination),
       this.clearWishList()
     let btn = document.createElement('button')
@@ -32,7 +36,7 @@ class CombinationDetails extends React.Component {
       'wishlist__listing--title'
     )[0].innerText = this.props.currentCombination.name
     this.drawCanvas()
-    //this.drawItemsOnCanvas()
+    this.drawItemsOnCanvas()
   }
 
   componentDidUpdate(prevProps) {
@@ -64,22 +68,28 @@ class CombinationDetails extends React.Component {
     let context = canvas.getContext('2d')
     context.canvas.width = wishListWrapperX - combinationDetailsListWrapperX
     context.canvas.height = 600 - 27.375 - 20
-    context.fillStyle = 'green'
+    context.fillStyle = 'white'
     context.fillRect(0, 0, context.canvas.width, context.canvas.height)
   }
 
   drawItemsOnCanvas = () => {
     console.log(this.props.canvasItems, 'draw canvas items')
-    for (let item of this.props.canvasItems) {
-      let myCanvas = document.getElementById('combinationCanvas')
-      let context = myCanvas.getContext('2d')
-      context.drawImage(
-        item.image.img,
-        item.image.positionX,
-        item.image.positionY,
-        item.image.width,
-        item.image.height
-      )
+    if (this.props.canvasItems.products.length > 0) {
+      for (let item of this.props.canvasItems.products) {
+        console.log(item, 'item')
+        let myCanvas = document.getElementById('combinationCanvas')
+        let context = myCanvas.getContext('2d')
+        let img = document.createElement('img')
+        img.src = item?.product.image[0]
+
+        context.drawImage(
+          img,
+          item?.image?.positionX,
+          item?.image?.positionY,
+          item?.image?.width * 1.5,
+          item?.image?.height * 1.5
+        )
+      }
     }
   }
 
@@ -139,23 +149,37 @@ class CombinationDetails extends React.Component {
       image: canvasImg,
       product: this.dragItem.current,
     }
-
-    this.drawCombinationToCanvas(x, y, img)
-    this.props.addProductToCanvas(canvasItem, this.props.currentCombination.id)
+    let findItem = this.props.canvasItems.products.find((product) => {
+      return product.product.id === canvasItem.product.id
+    })
+    console.log(findItem, 'findItem')
+    if (findItem === undefined) {
+      this.drawCombinationToCanvas(x, y, img)
+      this.props.addProductToCanvas(
+        canvasItem,
+        this.props.currentCombination.id
+      )
+    }
   }
 
   drawCombinationToCanvas = (imgPositionX, imgPositionY, img) => {
     let myCanvas = document.getElementById('combinationCanvas')
     let context = myCanvas.getContext('2d')
-    context.drawImage(img, imgPositionX, imgPositionY, img.width, img.height)
+    context.drawImage(
+      img,
+      imgPositionX,
+      imgPositionY,
+      img.width * 1.5,
+      img.height * 1.5
+    )
   }
 
   handleMouseDown = (e) => {
     console.log('hey')
   }
   removeProductFromCombination = (combinationId, productId) => {
-    console.log(combinationId, productId, 'combinationdetails')
     this.props.removeProduct(combinationId, productId)
+    this.props.deleteProductFromCanvas(combinationId, productId)
   }
   render() {
     // console.log(this.state.currentCombination, 'state')
@@ -214,6 +238,7 @@ class CombinationDetails extends React.Component {
             }}
             ref={this.combinationCanvasRef}
             onMouseDown={this.handleMouseDown}
+            className="Combination-Details__Canvas-Style"
           ></canvas>
           <Button
             className="Combination-Details__Canvas-Button"
@@ -231,13 +256,19 @@ const mapStateToProps = (state, ownProps) => ({
   currentCombination: state.combinations.find(
     ({ id }) => id.toString() === ownProps.match.params.combinationId
   ),
-  canvasItems: state.canvasItems,
+  canvasItems: state.canvasItems.find(
+    ({ id }) => id.toString() === ownProps.match.params.combinationId
+  ),
 })
 
 const mapDispatchToProps = (dispatch) => {
   return {
     removeProduct: (combinationID, productID) =>
       dispatch(removeProductFromCombinationDetails(combinationID, productID)),
+    addProductToCanvas: (canvasItem, combinationID) =>
+      dispatch(addProductToCanvas(canvasItem, combinationID)),
+    deleteProductFromCanvas: (combinationID, productID) =>
+      dispatch(deleteProductFromCanvas(combinationID, productID)),
   }
 }
 

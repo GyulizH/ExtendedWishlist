@@ -10,7 +10,11 @@ import {
 } from '../../store/Modal/combinationAction'
 import { Link } from 'react-router-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
-import { addNewCombinationToCanvas } from '../../store/Modal/canvasAction'
+
+import {
+  addNewCombinationToCanvas,
+  deleteCombinationCanvas,
+} from '../../store/Modal/canvasAction'
 
 class CombinationList extends React.Component {
   constructor(props) {
@@ -72,6 +76,8 @@ class CombinationList extends React.Component {
       )
       costArr.push(onlyThePrice)
     }
+
+    //price i duzenle
     let reducedCost =
       costArr.length > 0
         ? costArr.reduce((acc, curr) => {
@@ -109,11 +115,18 @@ class CombinationList extends React.Component {
   }
 
   addNewCombinationToCanvas = (id) => {
+    console.log(typeof id, 'id type')
     let canvasCombination = {
       id: id,
       products: [],
     }
+    console.log(id, 'canvas combination')
     this.props.addNewCombinationToCanvas(canvasCombination)
+  }
+
+  removeCombination = (e) => {
+    this.props.removeCombination(e.target.id)
+    this.props.deleteCombinationCanvas(e.target.id)
   }
 
   render() {
@@ -154,7 +167,7 @@ class CombinationList extends React.Component {
                 </Button>
                 <Button
                   id={item.id}
-                  onClick={(e) => this.props.removeCombination(e.target.id)}
+                  onClick={(e) => this.removeCombination(e)}
                   className="Combination-Actions-Button"
                   variant={BTN_NO_ICON}
                 >
@@ -176,8 +189,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     removeCombination: (id) => dispatch(removeCombination(id)),
-    addNewCombinationToCanvas: (combinationID) =>
-      dispatch(addNewCombinationToCanvas(combinationID)),
+    addNewCombinationToCanvas: (combination) =>
+      dispatch(addNewCombinationToCanvas(combination)),
+    deleteCombinationCanvas: (id) => dispatch(deleteCombinationCanvas(id)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CombinationList)
