@@ -53,10 +53,10 @@ export const combinationReducer = (state = [], action) => {
       return obj.id === action.productID
     }
     let productToBeRemoved = selectedCombination.products.findIndex(findProduct)
-    if (productToBeRemoved !== -1)
+    if (productToBeRemoved !== -1) {
       selectedCombination.products.splice(productToBeRemoved, 1)
-    console.log([...state], 'combinationreducer')
-    return [...state]
+      return [...state]
+    }
   }
 
   return state

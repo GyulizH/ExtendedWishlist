@@ -115,7 +115,6 @@ class CombinationList extends React.Component {
   }
 
   addNewCombinationToCanvas = (id) => {
-    console.log(typeof id, 'id type')
     let canvasCombination = {
       id: id,
       products: [],

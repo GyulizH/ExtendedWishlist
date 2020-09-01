@@ -9,6 +9,7 @@ import {
   addProductToCanvas,
   deleteProductFromCanvas,
 } from '../../store/Modal/canvasAction'
+import { Link } from 'react-router-dom'
 
 class CombinationDetails extends React.Component {
   constructor(props) {
@@ -26,7 +27,6 @@ class CombinationDetails extends React.Component {
 
   //put canvas in a different component, maybe draw canvas elsewhere
   componentDidMount() {
-    console.log(this.props.canvasItems, 'component did mount')
     this.convertProductPictures(this.props.currentCombination),
       this.clearWishList()
     let btn = document.createElement('button')
@@ -36,18 +36,44 @@ class CombinationDetails extends React.Component {
       'wishlist__listing--title'
     )[0].innerText = this.props.currentCombination.name
     this.drawCanvas()
-    this.drawItemsOnCanvas()
+    //
+    //this.drawItemsOnCanvas(this.props.canvasItems)
+    let wishlistItems = document.getElementsByClassName('wishlist__listing')[0]
+
+    const config = { attributes: true, childList: true, subtree: true }
+    const observer = new MutationObserver(this.callBackForMutationObserver)
+    observer.observe(wishlistItems, config)
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.canvasItems !== prevProps.canvasItems) {
-      console.log(this.props.canvasItems, 'componentdidMount')
+      //console.log(this.props.canvasItems, 'componentdidMount')
       //this.drawItemsOnCanvas()
     }
     if (this.props.currentCombination !== prevProps.currentCombination) {
       //console.log('component did update')
       this.convertProductPictures(this.props.combinations)
     }
+  }
+
+  //if i refresh combination details page it will delete everything inside
+  callBackForMutationObserver = (mutationList, observer) => {
+    for (let mutation of mutationList) {
+      if (mutation.type === 'childList') {
+        mutation.addedNodes.forEach((node) => {
+          if (
+            node.nodeName === 'DIV' &&
+            mutation.target.className === 'wishlist-item'
+          ) {
+            console.log(mutation.target.className)
+            mutation.target.innerHTML = ''
+          } else if (node.nodeName === 'HR') {
+            observer.disconnect()
+          }
+        })
+      }
+    }
+    observer.disconnect()
   }
   // trying to clean the wishlist elements not working
   clearWishList = () => {
@@ -67,11 +93,14 @@ class CombinationDetails extends React.Component {
       .getBoundingClientRect().width
     let context = canvas.getContext('2d')
     context.canvas.width = wishListWrapperX - combinationDetailsListWrapperX
+    canvas.style.width = `${
+      wishListWrapperX - combinationDetailsListWrapperX
+    }px`
     context.canvas.height = 600 - 27.375 - 20
     context.fillStyle = 'white'
     context.fillRect(0, 0, context.canvas.width, context.canvas.height)
   }
-
+  //.replace('$thumb$', '$listing$')
   drawItemsOnCanvas = () => {
     console.log(this.props.canvasItems, 'draw canvas items')
     if (this.props.canvasItems.products.length > 0) {
@@ -80,6 +109,7 @@ class CombinationDetails extends React.Component {
         let myCanvas = document.getElementById('combinationCanvas')
         let context = myCanvas.getContext('2d')
         let img = document.createElement('img')
+        console.log('bu yenii')
         img.src = item?.product.image[0]
 
         context.drawImage(
@@ -135,43 +165,42 @@ class CombinationDetails extends React.Component {
     const canvas = this.combinationCanvasRef.current
     let canvasPositionX = canvas.getBoundingClientRect().left
     let canvasPositionY = canvas.getBoundingClientRect().top
-    let x = imgPositionX - canvasPositionX
-    let y = imgPositionY - canvasPositionY
+    let x = imgPositionX - canvasPositionX - img.width / 2
+    let y = imgPositionY - canvasPositionY - img.height / 2
 
+    let src = this.dragNode.current.src
     let canvasImg = {
-      width: 96,
-      height: 138,
+      width: img.width,
+      height: img.height,
       positionX: x,
       positionY: y,
-      img: this.dragNode.current,
+      img: src,
     }
+
+    console.log(src)
     let canvasItem = {
       image: canvasImg,
       product: this.dragItem.current,
     }
+
     let findItem = this.props.canvasItems.products.find((product) => {
       return product.product.id === canvasItem.product.id
     })
-    console.log(findItem, 'findItem')
-    if (findItem === undefined) {
-      this.drawCombinationToCanvas(x, y, img)
-      this.props.addProductToCanvas(
-        canvasItem,
-        this.props.currentCombination.id
-      )
-    }
+
+    //if (findItem === undefined) {
+    this.drawCombinationToCanvas(x, y, canvasImg)
+    this.props.addProductToCanvas(canvasItem, this.props.currentCombination.id)
+    //}
   }
 
   drawCombinationToCanvas = (imgPositionX, imgPositionY, img) => {
     let myCanvas = document.getElementById('combinationCanvas')
     let context = myCanvas.getContext('2d')
-    context.drawImage(
-      img,
-      imgPositionX,
-      imgPositionY,
-      img.width * 1.5,
-      img.height * 1.5
-    )
+    let newImg = document.createElement('img')
+    newImg.src = img.img
+
+    console.log(newImg.height, newImg.width, 'only image')
+    context.drawImage(newImg, imgPositionX, imgPositionY, img.width, img.height)
   }
 
   handleMouseDown = (e) => {
@@ -182,7 +211,6 @@ class CombinationDetails extends React.Component {
     this.props.deleteProductFromCanvas(combinationId, productId)
   }
   render() {
-    // console.log(this.state.currentCombination, 'state')
     return (
       <div className="Combination-Details-Container">
         <div className="Combination-Details__Item-List-Wrapper">
@@ -195,7 +223,7 @@ class CombinationDetails extends React.Component {
                 : null)
             }
           >
-            {this.state.currentCombination?.products?.map((product) => {
+            {this.props.currentCombination?.products?.map((product) => {
               return (
                 <div className="Combination-Details__List-Item" id={product.id}>
                   <div
@@ -206,6 +234,7 @@ class CombinationDetails extends React.Component {
                     onDragEnter={(e) => {
                       this.handleDragEnter(e)
                     }}
+                    id={product.id}
                   >
                     <img src={product.image[0]} id={product.id} />
                   </div>
@@ -214,7 +243,7 @@ class CombinationDetails extends React.Component {
                     className="Combination-Details__List-Item-Button"
                     onClick={() =>
                       this.removeProductFromCombination(
-                        this.state.currentCombination.id,
+                        this.props.currentCombination.id,
                         product.id
                       )
                     }
@@ -240,12 +269,22 @@ class CombinationDetails extends React.Component {
             onMouseDown={this.handleMouseDown}
             className="Combination-Details__Canvas-Style"
           ></canvas>
-          <Button
-            className="Combination-Details__Canvas-Button"
-            variant={BTN_NO_ICON}
-          >
-            GO TO CHECKOUT
-          </Button>
+          <div>
+            <Link to="/" refresh="true">
+              <Button
+                className="Combination-Details__Canvas-Button"
+                variant={BTN_NO_ICON}
+              >
+                GO TO COMBINATION LIST
+              </Button>
+            </Link>
+            <Button
+              className="Combination-Details__Canvas-Button"
+              variant={BTN_NO_ICON}
+            >
+              GO TO CHECKOUT
+            </Button>
+          </div>
         </div>
       </div>
     )

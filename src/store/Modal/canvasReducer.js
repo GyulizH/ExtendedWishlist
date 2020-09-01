@@ -44,6 +44,7 @@ export const canvasReducer = (state = [], action) => {
     let combinationToBeRemoved = selectedCombination.products.findIndex(
       findProduct
     )
+    //index ini isme koy
     if (combinationToBeRemoved !== -1)
       selectedCombination.products.splice(combinationToBeRemoved, 1)
     return [...state]
